@@ -1,0 +1,110 @@
+body {
+    font-family: "Helvetica Neue", Helvetica;
+}
+
+.row-data-container {
+    margin-bottom: 1rem; 
+    border: 0.09rem solid #333333; 
+    border-radius: 0.5rem;
+    list-style-type: none;
+    padding: 1rem; 
+    display: flex;
+    box-sizing: border-box;
+    flex-direction: column; 
+}
+
+.sensor-metric-container { 
+    display: flex;
+    flex-direction: row; 
+    align-items: center; 
+    width: 100%;
+    gap: 1rem; 
+}
+
+.sensor-id-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: #e9ecef; 
+    border-radius: 50%;
+    width: 5.5rem; 
+    height: 5.5rem; 
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+.sensor-id {
+    font-weight: bold;
+    font-size: 1em; 
+    color: #212529; 
+}
+
+.metric-container { 
+    display: flex;
+    flex-direction: column; 
+    align-items: flex-start;
+    gap: 0.5rem; 
+    flex-grow: 1;
+    min-width: 0;
+    padding-left: 2rem;
+}
+
+.metric-row { 
+    display: flex;
+    align-items: center;
+    gap: 0.6rem; 
+    width: 100%;  
+}
+
+.metric-icon {
+    flex-shrink: 0;
+    display: flex; 
+    align-items: center;
+}
+
+.metric-icon svg {
+    width: 1.7rem; 
+    height: 1.7rem;
+}
+
+
+.metric-progress { 
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column; 
+    min-width: 0;
+}
+
+.outer-container { 
+    width: 100%;
+    height: 0.55rem; 
+    background-color: #dfdfdf; 
+    border-radius: 0.4rem; 
+    min-width: 0;
+}
+
+.inner-container { 
+    height: 100%;
+    border-radius: 0.4rem; 
+    transition: width 0.3s ease-in-out;
+}
+
+.metric-value {
+    font-size: 0.85em; 
+    margin-left: 0.3rem;
+    margin-top: 0.2rem;
+    color: #495057; 
+    white-space: nowrap; 
+}
+
+.expanded-container {
+    margin-top: 0.75rem; 
+    padding: 0.75rem 0 0.75rem 1.5rem; 
+    border-top: 0.09rem dashed #adb5bd; 
+    font-size: 0.9em; 
+}
+
+.expanded-container p {
+    margin: 0.3rem 0; 
+}
