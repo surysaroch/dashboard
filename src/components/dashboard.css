@@ -1,0 +1,17 @@
+.dashboard-container {
+    padding-left: 20rem;
+    padding-right: 20rem;
+
+}
+
+.heading-container{
+    display: flex;
+
+}
+
+.features-container{
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+    gap: 2rem
+}

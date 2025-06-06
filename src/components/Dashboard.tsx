@@ -3,6 +3,8 @@ import SimulateRealTimeData from "../util/SimulateRealTimeData";
 import RowData from "./rowData";
 import Sorting from "./sorting";
 import Filtering from "./Filtering";
+import "./dashboard.css" 
+
 interface SensorMetric {
     sensorId: string;
     temperature: number;
@@ -17,11 +19,11 @@ const Dashboard: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [sortedData, setSortedData] = useState({ metric: "sensorId", direction: "asc" });
   const [filteredData, setFilteredData] = useState({
-    sensorId: "",
     temperature: { min: 0, max: 40 },
     humidity: { min: 0, max: 90 },
     airQuality: { min: 0, max: 200 }
   });
+  const [chosenSensorId, setChosenSensorId] = useState('')
 
   useEffect(() => {
     const stopSimulation = SimulateRealTimeData(100, 1000, (updates: SensorMetric[]) => { 
@@ -39,7 +41,8 @@ const Dashboard: React.FC = () => {
       const filteredTemp = (item.temperature >= filteredData.temperature.min) && ( item.temperature <= filteredData.temperature.max);
       const filteredAir = (item.airQuality >= filteredData.airQuality.min) && ( item.airQuality <= filteredData.airQuality.max);
       const filteredHumidity = (item.humidity >= filteredData.humidity.min) && ( item.humidity <= filteredData.humidity.max);
-      const filteredSensorId = filteredData.sensorId === '' || item.sensorId.toLowerCase().includes(filteredData.sensorId.toLowerCase());
+      const filteredSensorId = chosenSensorId === '' || item.sensorId.toLowerCase().includes(chosenSensorId.toLowerCase());
+      // const filteredSensorId = chosenSensorId === '' || item.sensorId.toLowerCase() === chosenSensorId.toLowerCase();
       return filteredTemp && filteredAir && filteredHumidity && filteredSensorId;
     })
 
@@ -58,7 +61,7 @@ const Dashboard: React.FC = () => {
       });
       return items;  
     }
-  },[sortedData, sensorData, filteredData]);
+  },[sortedData, sensorData, filteredData, chosenSensorId]);
 
 
   const handleNextPage = () => {
@@ -86,20 +89,24 @@ const Dashboard: React.FC = () => {
       }
     });
   };
-
   
-
-      
+  const handleSensorIdFilter = (sensorId: string) =>{
+    setChosenSensorId(sensorId)
+  }
+     
 
 
   return (
     <div className="dashboard-container">
-      
-      <h2>Live Sensor Data</h2>
-      <div><Filtering onFilter={handleFilterChange} /></div>
-      <div><Sorting onSort={handleSort} /></div>
+      <div className="heading-container">
+        <h2>Live Sensor Data</h2>
+        <div className="features-container">
+          <div><Filtering onFilter={handleFilterChange} onSensorFilter={handleSensorIdFilter}/></div>
+          <div><Sorting onSort={handleSort} /></div>
+        </div>
+      </div>
 
-      <ul style={{paddingRight: '20rem', paddingTop: '0.1rem', paddingLeft: '15rem'}}>
+      <ul>
         {pageData.map(metric => (
           <RowData key={metric.sensorId} metric={metric} />
         ))}

@@ -1,0 +1,56 @@
+body { 
+    font-family: "Helvetica Neue", Helvetica;
+}
+
+.sorting-container {
+    display: flex;
+    align-items: center; 
+    gap: 0.75rem;    
+    padding-top: 0.75rem;  
+
+}
+
+.sorting-container span {
+    color: #555e68;     
+    font-size: 0.9rem;
+}
+
+
+.dropdown-container select {
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #333;         
+    padding: 0.5rem 2rem 0.5rem 0.75rem; 
+    border: 1px solid #ced4da; 
+    border-radius: 0.3rem;    
+    appearance: none;      
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23333' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.5rem center; 
+    background-size: 1em; 
+}
+
+.dropdown-container select:hover {
+    background-color: #f8f9fa; 
+    border-color: #adb5bd;
+}
+
+
+
+.order-toggle-button button {
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #333;
+    background-color: #fff;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #ced4da;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    width: 7.5rem;
+}
+
+.order-toggle-button button:hover {
+    background-color: #f8f9fa; 
+    border-color: #adb5bd;
+}

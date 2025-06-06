@@ -2,14 +2,14 @@ import { useState } from "react";
 
 interface FilteringProps {
     onFilter: (metric: string, newRangeValue: { min: number, max: number }) => void;
+    onSensorFilter: (sensorId:  string) => void;
 }
 
-const Filtering: React.FC<FilteringProps> = ({ onFilter }) => {
+const Filtering: React.FC<FilteringProps> = ({ onFilter, onSensorFilter }) => {
     const[isExpanded, setIsExpanded] = useState(false)
     const[temperatureRange, setTemperatureRange] = useState({ min: 10, max: 40 })
     const[airQualityRange, setAirQualityRange] = useState({ min: 0, max: 200 })
     const[humidityRange, setHumidityRange] = useState({ min: 0, max: 90 })
-    const[sensorId, setSensorId] = useState('')
     
     const handleFiltering = (metric: string, value: number, isMin: boolean) => {
         switch(metric) {
@@ -45,13 +45,16 @@ const Filtering: React.FC<FilteringProps> = ({ onFilter }) => {
                 break;
         }
     }
-
+    
+    const handleSearching = (searchedSensorId: string) => {
+        onSensorFilter(searchedSensorId);
+    }
     return (
         <>
         <button onClick={() => setIsExpanded(!isExpanded)}>Filters</button>
         {isExpanded? (
             <div>
-                <input type="text" placeholder="Search by sensorId" onChange={(e) => setSensorId(e.target.value)} />
+                <input type="text" placeholder="Search by sensorId" onChange={(e) => handleSearching(e.target.value)} />
                 <div>
                     <label>Temperature</label>
                     <div>
@@ -60,7 +63,7 @@ const Filtering: React.FC<FilteringProps> = ({ onFilter }) => {
                             min={10} 
                             max={temperatureRange.max} 
                             step={1} 
-                          
+                            value={temperatureRange.min}
                             onChange={(e) => handleFiltering('temperature', Number(e.target.value), true)} 
                         />
                         <span>Min: {temperatureRange.min}°C</span>

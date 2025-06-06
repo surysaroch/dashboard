@@ -9,7 +9,6 @@ body {
     list-style-type: none;
     padding: 1rem; 
     display: flex;
-    box-sizing: border-box;
     flex-direction: column; 
 }
 
