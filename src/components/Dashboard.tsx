@@ -99,7 +99,7 @@ const Dashboard: React.FC = () => {
   return (
     <div className="dashboard-container">
       <div className="heading-container">
-        <h2>Live Sensor Data</h2>
+        <h3>Live Sensor Data</h3>
         <div className="features-container">
           <div><Filtering onFilter={handleFilterChange} onSensorFilter={handleSensorIdFilter}/></div>
           <div><Sorting onSort={handleSort} /></div>
@@ -113,8 +113,8 @@ const Dashboard: React.FC = () => {
       </ul>
 
       <div className="pagination-container">
-        <button onClick={handlePreviousPage} disabled={currentPage === 1}>Previous</button>
-        <span>{currentPage}</span>
+        <button onClick={handlePreviousPage} disabled={currentPage === 1}>Prev</button>
+        <span className="page-number">{currentPage}</span>
         <button onClick={handleNextPage} disabled={currentPage === Math.ceil(sensorData.length / MAX_PAGE_SIZE)}>Next</button>
       </div>
     </div>

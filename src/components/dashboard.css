@@ -1,3 +1,7 @@
+body { 
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
 .dashboard-container {
     padding-left: 20rem;
     padding-right: 20rem;
@@ -8,10 +12,46 @@
     display: flex;
 
 }
+.heading-container h3{
+    width: 100%;
+    margin-left: 2.5rem;
+}
 
 .features-container{
     display: flex;
     width: 100%;
     justify-content: flex-end;
-    gap: 2rem
+    gap: 1rem
+}
+
+.pagination-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1rem;
+  }
+  
+  .pagination-container button {
+    padding: 0.5rem 1rem;
+    border: 1px solid #898a8b;
+    background-color: white;
+    border-radius: 0.4rem;
+    font-size: 0.875rem;
+    color: #4a5568;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+    
+  .pagination-container button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  .page-number {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #2d3748;
+    min-width: 2rem;
+    text-align: center;
 }
