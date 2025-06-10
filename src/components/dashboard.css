@@ -1,5 +1,6 @@
 body { 
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #1a202c;
 }
 
 .dashboard-container {
@@ -15,6 +16,7 @@ body {
 .heading-container h3{
     width: 100%;
     margin-left: 2.5rem;
+    color: white;
 }
 
 .features-container{
@@ -28,9 +30,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 1rem;
-    padding: 1rem;
-  }
+   }
   
   .pagination-container button {
     padding: 0.5rem 1rem;
@@ -40,7 +40,7 @@ body {
     font-size: 0.875rem;
     color: #4a5568;
     cursor: pointer;
-    transition: all 0.2s ease;
+
   }
     
   .pagination-container button:disabled {
@@ -51,7 +51,7 @@ body {
   .page-number {
     font-size: 1rem;
     font-weight: 500;
-    color: #2d3748;
-    min-width: 2rem;
+    color: #ffffff;
+    width: 2rem;
     text-align: center;
 }

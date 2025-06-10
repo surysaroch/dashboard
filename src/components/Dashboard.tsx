@@ -26,7 +26,7 @@ const Dashboard: React.FC = () => {
   const [chosenSensorId, setChosenSensorId] = useState('')
 
   useEffect(() => {
-    const stopSimulation = SimulateRealTimeData(100, 1000, (updates: SensorMetric[]) => { 
+    const stopSimulation = SimulateRealTimeData(100000, 1000, (updates: SensorMetric[]) => { 
       setSensorData(updates);
     });
 

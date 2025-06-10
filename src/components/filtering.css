@@ -4,7 +4,7 @@
 
 .filter-toggle-btn {
     font-weight: bold;
-    background-color: #ffffff; 
+    background-color: #BB86FC; 
     color: #333; 
     border: 1px solid #d1d5db; 
     border-radius: 0.3rem; 
@@ -31,6 +31,7 @@
     padding: 1.25rem; 
     margin-top: 0.5rem;
     display: flex;
+    position:absolute;
     flex-direction: column;
     gap: 1.25rem; 
 }
