@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./sorting.css"
+import Arrow from "./svgs/arrow";
 
 interface SortingProps {
     onSort: (metric: string, direction: string) => void;
@@ -26,7 +27,7 @@ const Sorting: React.FC<SortingProps> = ({ onSort }) => {
         <div className = "sorting-container">
             <span>Sort by:</span> 
             <div className = "dropdown-container">
-                <select value={sortMetric} onChange={handleMetricChange}>
+                <select value={sortMetric} onChange={handleMetricChange}>                    
                     <option value="sensorId">Sensor ID</option>
                     <option value="temperature">Temperature</option>
                     <option value="humidity">Humidity</option>
@@ -35,7 +36,9 @@ const Sorting: React.FC<SortingProps> = ({ onSort }) => {
             </div>
             <div className = "order-toggle-button">
                 <button onClick={handleOrderChange}>
-                    {sortOrder === "asc" ? "Min to Max" : "Max to Min"}
+                    {sortOrder === "asc" ?
+                        <><Arrow/><p>Ascending</p></>: 
+                        <><Arrow isFlipped={true}/> <p>Descending</p></>}
                 </button>
             </div>
         </div>

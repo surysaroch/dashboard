@@ -42,7 +42,6 @@ const Dashboard: React.FC = () => {
       const filteredAir = (item.airQuality >= filteredData.airQuality.min) && ( item.airQuality <= filteredData.airQuality.max);
       const filteredHumidity = (item.humidity >= filteredData.humidity.min) && ( item.humidity <= filteredData.humidity.max);
       const filteredSensorId = chosenSensorId === '' || item.sensorId.toLowerCase().includes(chosenSensorId.toLowerCase());
-      // const filteredSensorId = chosenSensorId === '' || item.sensorId.toLowerCase() === chosenSensorId.toLowerCase();
       return filteredTemp && filteredAir && filteredHumidity && filteredSensorId;
     })
 
@@ -99,7 +98,7 @@ const Dashboard: React.FC = () => {
   return (
     <div className="dashboard-container">
       <div className="heading-container">
-        <h3>Live Sensor Data</h3>
+        <h2>Live Sensor Data</h2>
         <div className="features-container">
           <div><Filtering onFilter={handleFilterChange} onSensorFilter={handleSensorIdFilter}/></div>
           <div><Sorting onSort={handleSort} /></div>

@@ -2,20 +2,7 @@
     padding-top: 0.75rem;
 }
 
-.filter-toggle-btn {
-    font-weight: bold;
-    background-color: #BB86FC; 
-    color: #333; 
-    border: 1px solid #d1d5db; 
-    border-radius: 0.3rem; 
-    font-size: 0.9rem; 
-    cursor: pointer;
-    transition: background-color 0.2s, border-color 0.2s, box-shadow 0.2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.5rem 2rem;
-}
+
 
 .filtering-toggle-btn button::hover {
     background-color: #f8f9fa; 
@@ -72,3 +59,48 @@
     font-size: 0.8rem; 
     color: #585858; 
 }
+
+
+@media (width < 500px) {
+    .filter-toggle-btn {
+        font-weight: bold;
+        background-color: #6366f1; 
+        color: #333; 
+        border: 1px solid #4b5563; 
+        border-radius: 0.3rem; 
+        font-size: 0.9rem; 
+        cursor: pointer;
+        transition: background-color 0.2s, border-color 0.2s, box-shadow 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.5rem;
+        aspect-ratio: 1/1;
+    }
+
+    .filter-toggle-btn p{
+        display: none;
+    }
+
+}
+
+  
+@media (width >= 500px) {
+    .filter-toggle-btn {
+        font-weight: bold;
+        background-color: #6366f1; 
+        color: #333; 
+        border: 1px solid #4b5563; 
+        border-radius: 0.3rem; 
+        font-size: 0.9rem; 
+        cursor: pointer;
+        transition: background-color 0.2s, border-color 0.2s, box-shadow 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 5.5rem;
+        padding: 0.5rem;
+        height: 2.5rem;
+    }
+
+  }

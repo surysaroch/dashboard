@@ -4,7 +4,7 @@ body {
 
 .row-data-container {
     margin-bottom: 0.8rem; 
-    border: 0.09rem solid #4a5568; 
+    border: 0.09rem solid #6366f1; 
     border-radius: 0.5rem;
     list-style-type: none;
     padding: 1rem; 
@@ -33,22 +33,6 @@ body {
     height: 5.5rem; 
     box-sizing: border-box;
     flex-shrink: 0;
-}
-
-.sensor-id {
-    font-weight: bold;
-    font-size: 1em; 
-    color: #d1d5db; 
-}
-
-.metric-container { 
-    display: flex;
-    flex-direction: column; 
-    align-items: flex-start;
-    gap: 0.5rem; 
-    flex-grow: 1;
-    min-width: 0;
-    padding-left: 2rem;
 }
 
 .metric-row { 
@@ -80,7 +64,7 @@ body {
 .outer-container { 
     width: 100%;
     height: 0.55rem; 
-    background-color: #dfdfdf; 
+    background-color: #4a5568; 
     border-radius: 0.4rem; 
     min-width: 0;
 }
@@ -94,8 +78,8 @@ body {
 .metric-value {
     font-size: 0.85em; 
     margin-left: 0.3rem;
-    margin-top: 0.2rem;
-    color: #495057; 
+    margin-bottom: 0.3rem;
+    color: #fff; 
     white-space: nowrap; 
 }
 
@@ -110,3 +94,70 @@ body {
     margin: 0.3rem 0; 
 }
 
+
+@media (width <= 768px) {
+    
+    .sensor-id-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        background-color: #4a5568; 
+        border-radius: 50%;
+        width: 3rem; 
+        height: 3rem; 
+        box-sizing: border-box;
+        flex-shrink: 0;
+    }
+
+    .sensor-id {
+        font-weight: bold;
+        font-size: 0.6em; 
+        color: #d1d5db; 
+    }
+
+    
+    .metric-container { 
+        display: flex;
+        flex-direction: column; 
+        align-items: flex-start;
+        gap: 0.5rem; 
+        flex-grow: 1;
+        min-width: 0;
+    }
+
+  }
+  
+@media (width >= 768px) {
+
+    .sensor-id-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        background-color: #4a5568; 
+        border-radius: 50%;
+        width: 5.5rem; 
+        height: 5.5rem; 
+        box-sizing: border-box;
+        flex-shrink: 0;
+    }
+    
+    .sensor-id {
+        font-weight: bold;
+        font-size: 1em; 
+        color: #d1d5db; 
+    }
+
+    
+    .metric-container { 
+        display: flex;
+        flex-direction: column; 
+        align-items: flex-start;
+        gap: 0.5rem; 
+        flex-grow: 1;
+        min-width: 0;
+        padding-left: 2rem;
+    }
+  
+}

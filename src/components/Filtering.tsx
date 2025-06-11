@@ -57,9 +57,9 @@ const Filtering: React.FC<FilteringProps> = ({ onFilter, onSensorFilter }) => {
         <div className="filter-wrapper-main"> 
             <button className="filter-toggle-btn" onClick={() => setIsExpanded(!isExpanded)}>
                 <Filter/>
-                Filter
+                <p>Filter</p>
             </button>
-            {isExpanded? (
+            {isExpanded && (
                 <div className="filter-panel-content">
                     <div className="filter-input-group">
                         <input
@@ -157,7 +157,7 @@ const Filtering: React.FC<FilteringProps> = ({ onFilter, onSensorFilter }) => {
                         </div>
                     </div>
                 </div>
-            ):null}
+            )}
         </div>
         </>
     )
