@@ -29,7 +29,7 @@
 .filter-label {
     font-size: 0.875rem; 
     font-weight: 500;
-    color: #1f2937; 
+    color: #D3D3D3; 
 }
 
 
@@ -89,7 +89,7 @@
     .filter-toggle-btn {
         font-weight: bold;
         background-color: #6366f1; 
-        color: #333; 
+        color: #D3D3D3; 
         border: 1px solid #4b5563; 
         border-radius: 0.3rem; 
         font-size: 0.9rem; 

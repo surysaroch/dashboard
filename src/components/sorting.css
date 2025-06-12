@@ -16,7 +16,7 @@
 .dropdown-container select{
     font-size: 0.9rem;
     font-weight: bold;
-    color: #333;         
+    color: #D3D3D3;  
     background-color: #6366f1;
     padding: 0.5rem 2rem 0.5rem 0.75rem; 
     border: 1px solid #333; 
@@ -33,7 +33,7 @@
 .order-toggle-button button {
     font-size: 0.9rem;
     font-weight: bold;
-    color: #333;
+    color: #D3D3D3; 
     background-color: #6366f1;
     border: 1px solid #333;
     border-radius: 0.3rem;      

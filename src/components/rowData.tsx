@@ -45,7 +45,7 @@ const RowData: React.FC<rowDataProps> = ({ metric }) => {
 
   return (
     <li key={metric.sensorId} onClick={handleToggleExpand} className = "row-data-container">
-      <div className = "sensor-metric-container">
+      <div className = "sensor-metric-container"> 
         <div className = "sensor-id-container"> 
           <span className = "sensor-id">{metric.sensorId}</span>
         </div>
@@ -54,13 +54,13 @@ const RowData: React.FC<rowDataProps> = ({ metric }) => {
           <div className="metric-row">
               <span className="metric-icon"><Temperature color="#FF7101"/></span>
               <div className="metric-progress">
-              <span className="metric-value">
-                      {metric.temperature.toFixed(1)}°C ({temperaturePercentage.toFixed(0)}%)
+                <span className="metric-value">
+                  <p>{metric.temperature.toFixed(1)}%</p>
+                  <p>{temperaturePercentage.toFixed(0)}%</p>
                   </span>
-                  <div className="outer-container">
-                      <div className="inner-container" style={{ width: `${temperaturePercentage}%`, backgroundColor: '#FF7101' }}></div>
+                  <div className="outer-bar">
+                      <div className="inner-bar" style={{ width: `${temperaturePercentage}%`, backgroundColor: '#FF7101' }}></div>
                   </div>
-
               </div>
           </div>
 
@@ -68,10 +68,11 @@ const RowData: React.FC<rowDataProps> = ({ metric }) => {
               <span className="metric-icon"><AirQuality color="#00C5FF"/></span>
               <div className="metric-progress">
                 <span className="metric-value">
-                    {metric.airQuality.toFixed(1)} ({airQualityPercentage.toFixed(0)}%)
+                  <p>{metric.airQuality.toFixed(1)}%</p>
+                  <p>{airQualityPercentage.toFixed(0)}%</p>
                 </span>
-                  <div className="outer-container">
-                      <div className="inner-container" style={{ width: `${airQualityPercentage}%`, backgroundColor: '#00C5FF' }}></div>
+                  <div className="outer-bar">
+                      <div className="inner-bar" style={{ width: `${airQualityPercentage}%`, backgroundColor: '#00C5FF' }}></div>
                   </div>
 
               </div>
@@ -81,10 +82,11 @@ const RowData: React.FC<rowDataProps> = ({ metric }) => {
               <span className="metric-icon"><Humidity color="#00FF19" /></span>
               <div className="metric-progress">
                 <span className="metric-value">
-                    {metric.humidity.toFixed(1)}% ({humidityPercentage.toFixed(0)}%)
+                  <p>{metric.humidity.toFixed(1)}%</p>
+                  <p>{humidityPercentage.toFixed(0)}%</p>
                 </span>
-                  <div className="outer-container">
-                      <div className="inner-container" style={{ width: `${humidityPercentage}%`, backgroundColor: '#00FF19' }}></div>
+                  <div className="outer-bar">
+                      <div className="inner-bar" style={{ width: `${humidityPercentage}%`, backgroundColor: '#00FF19' }}></div>
                   </div>
               </div>
           </div>

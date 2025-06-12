@@ -26,7 +26,7 @@ const Dashboard: React.FC = () => {
   const [chosenSensorId, setChosenSensorId] = useState('')
 
   useEffect(() => {
-    const stopSimulation = SimulateRealTimeData(100000, 1000, (updates: SensorMetric[]) => { 
+    const stopSimulation = SimulateRealTimeData(100, 1000, (updates: SensorMetric[]) => { 
       setSensorData(updates);
     });
 
@@ -98,7 +98,7 @@ const Dashboard: React.FC = () => {
   return (
     <div className="dashboard-container">
       <div className="heading-container">
-        <h2>Live Sensor Data</h2>
+        <h1>Live Sensor Data</h1>
         <div className="features-container">
           <div><Filtering onFilter={handleFilterChange} onSensorFilter={handleSensorIdFilter}/></div>
           <div><Sorting onSort={handleSort} /></div>
