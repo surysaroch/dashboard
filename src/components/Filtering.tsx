@@ -3,9 +3,14 @@ import "./filtering.css";
 import "./svgs/filter.tsx";
 import Filter from "./svgs/filter.tsx";
 
+interface FilterItem {
+    metric: string;
+    range: { min: number; max: number };
+}
+
 interface FilteringProps {
-    onFilter: (metric: string, newRangeValue: { min: number, max: number }) => void;
-    onSensorFilter: (sensorId:  string) => void;
+    onFilter: (filters: FilterItem[]) => void;
+    onSensorFilter: (sensorId: string) => void;
 }
 
 const Filtering: React.FC<FilteringProps> = ({ onFilter, onSensorFilter }) => {
@@ -13,40 +18,46 @@ const Filtering: React.FC<FilteringProps> = ({ onFilter, onSensorFilter }) => {
     const[temperatureRange, setTemperatureRange] = useState({ min: 10, max: 40 })
     const[airQualityRange, setAirQualityRange] = useState({ min: 0, max: 200 })
     const[humidityRange, setHumidityRange] = useState({ min: 0, max: 90 })
+    const[sensorId, setSensorId] = useState("")
     
     const handleFiltering = (metric: string, value: number, isMin: boolean) => {
         switch(metric) {
-            case 'temperature':
+            case "temperature":
                 setTemperatureRange(prev => ({
                     ...prev,
-                    [isMin ? 'min' : 'max']: value
+                    [isMin ? "min" : "max"]: value
                 }));
-                onFilter('temperature', {
-                    ...temperatureRange,
-                    [isMin ? 'min' : 'max']: value
-                });
                 break;
-            case 'humidity':
+            case "humidity":
                 setHumidityRange(prev => ({
                     ...prev,
-                    [isMin ? 'min' : 'max']: value
+                    [isMin ? "min" : "max"]: value
                 }));
-                onFilter('humidity', {
-                    ...humidityRange,
-                    [isMin ? 'min' : 'max']: value
-                });
                 break;
-            case 'airQuality':
+            case "airQuality":
                 setAirQualityRange(prev => ({
                     ...prev,
-                    [isMin ? 'min' : 'max']: value
+                    [isMin ? "min" : "max"]: value
                 }));
-                onFilter('airQuality', {
-                    ...airQualityRange,
-                    [isMin ? 'min' : 'max']: value
-                });
-                break;
         }
+    }
+
+    const updateFilterValues = () => {
+        onFilter([
+            {
+                metric: "temperature",
+                range: temperatureRange
+
+            },
+            {
+                metric: "humidity",
+                range: humidityRange
+            },
+            {
+                metric: "airQuality",
+                range: airQualityRange
+            }
+        ])
     }
     
     const handleSearching = (searchedSensorId: string) => {
@@ -66,7 +77,7 @@ const Filtering: React.FC<FilteringProps> = ({ onFilter, onSensorFilter }) => {
                             className="filter-text-input"
                             type="text"
                             placeholder="e.g., Sensor-1"
-                            onChange={(e) => handleSearching(e.target.value)}
+                            onChange={(e) => setSensorId(e.target.value)}
                         />
                     </div>
 
@@ -81,7 +92,7 @@ const Filtering: React.FC<FilteringProps> = ({ onFilter, onSensorFilter }) => {
                                 max={temperatureRange.max} 
                                 step={1}
                                 value={temperatureRange.min}
-                                onChange={(e) => handleFiltering('temperature', Number(e.target.value), true)}
+                                onChange={(e) => handleFiltering("temperature", Number(e.target.value), true)}
                             />
                             <span className="range-value">Min: {temperatureRange.min}°C</span>
                         </div>
@@ -93,7 +104,7 @@ const Filtering: React.FC<FilteringProps> = ({ onFilter, onSensorFilter }) => {
                                 max={40}
                                 step={1}
                                 value={temperatureRange.max}
-                                onChange={(e) => handleFiltering('temperature', Number(e.target.value), false)}
+                                onChange={(e) => handleFiltering("temperature", Number(e.target.value), false)}
                             />
                             <span className="range-value">Max: {temperatureRange.max}°C</span>
                         </div>
@@ -110,7 +121,7 @@ const Filtering: React.FC<FilteringProps> = ({ onFilter, onSensorFilter }) => {
                                 max={humidityRange.max}
                                 step={1}
                                 value={humidityRange.min}
-                                onChange={(e) => handleFiltering('humidity', Number(e.target.value), true)}
+                                onChange={(e) => handleFiltering("humidity", Number(e.target.value), true)}
                             />
                             <span className="range-value">Min: {humidityRange.min}%</span>
                         </div>
@@ -122,7 +133,7 @@ const Filtering: React.FC<FilteringProps> = ({ onFilter, onSensorFilter }) => {
                                 max={90}
                                 step={1}
                                 value={humidityRange.max}
-                                onChange={(e) => handleFiltering('humidity', Number(e.target.value), false)}
+                                onChange={(e) => handleFiltering("humidity", Number(e.target.value), false)}
                             />
                             <span className="range-value">Max: {humidityRange.max}%</span>
                         </div>
@@ -139,7 +150,7 @@ const Filtering: React.FC<FilteringProps> = ({ onFilter, onSensorFilter }) => {
                                 max={airQualityRange.max}
                                 step={1}
                                 value={airQualityRange.min}
-                                onChange={(e) => handleFiltering('airQuality', Number(e.target.value), true)}
+                                onChange={(e) => handleFiltering("airQuality", Number(e.target.value), true)}
                             />
                             <span className="range-value">Min: {airQualityRange.min}</span>
                         </div>
@@ -151,10 +162,19 @@ const Filtering: React.FC<FilteringProps> = ({ onFilter, onSensorFilter }) => {
                                 max={200}
                                 step={1}
                                 value={airQualityRange.max}
-                                onChange={(e) => handleFiltering('airQuality', Number(e.target.value), false)}
+                                onChange={(e) => handleFiltering("airQuality", Number(e.target.value), false)}
                             />
                             <span className="range-value">Max: {airQualityRange.max}</span>
                         </div>
+                    </div>
+                    <div>
+                    <button className = "apply-button" onClick={() => {
+                            updateFilterValues();
+                            handleSearching(sensorId);
+                        }}
+                        >
+                        Apply
+                    </button>
                     </div>
                 </div>
             )}

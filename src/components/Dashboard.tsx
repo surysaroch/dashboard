@@ -12,6 +12,11 @@ interface SensorMetric {
     airQuality: number;
     timestamp: string;
 }
+
+interface FilterItem {
+  metric: string;
+  range: { min: number; max: number };
+}
 const MAX_PAGE_SIZE = 5;
 
 const Dashboard: React.FC = () => {
@@ -80,11 +85,13 @@ const Dashboard: React.FC = () => {
     setSortedData({ metric: chosenMetric, direction: direction });
   };
 
-  const handleFilterChange = (metric: string, newRangeValue: { min: number, max: number }) => {
+  const handleFilterChange = (filters: FilterItem[]) => {
     setFilteredData(prev => {
       return{
       ...prev,
-      [metric]: newRangeValue
+      [filters[0].metric]: filters[0].range,
+      [filters[1].metric]: filters[1].range,
+      [filters[1].metric]: filters[1].range
       }
     });
   };
