@@ -29,7 +29,7 @@
     justify-content: center;
    }
   
-  .pagination-container button {
+.pagination-container button {
     padding: 0.5rem 1rem;
     border: 1px solid #898a8b;
     background-color: white;
@@ -37,22 +37,27 @@
     font-size: 0.875rem;
     color: #4a5568;
     cursor: pointer;
-
-  }
+}
     
-  .pagination-container button:disabled {
+.pagination-container button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
-  }
-  
-  .page-number {
-    font-size: 1rem;
-    font-weight: 500;
-    color: #ffffff;
-    width: 2rem;
-    text-align: center;
 }
 
+
+
+.pagination-container input {
+    display: flex;
+    padding: 0.5rem 1rem;
+    margin-right: 0.5rem;
+    margin-left: 0.5rem;
+    border: 1px solid #898a8b;
+    border-radius: 0.4rem;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: bold;
+    width: 2rem; 
+}
 
 @media (width < 1400px) {
     .dashboard-container {

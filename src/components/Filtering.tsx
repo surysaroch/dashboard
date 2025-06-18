@@ -109,36 +109,6 @@ const Filtering: React.FC<FilteringProps> = ({ onFilter, onSensorFilter }) => {
                             <span className="range-value">Max: {temperatureRange.max}°C</span>
                         </div>
                     </div>
-
-  
-                    <div className="filter-input-group">
-                        <label className="filter-label">Humidity Range</label>
-                        <div className="range-inputs-container">
-                            <input
-                                className="filter-range-input"
-                                type="range"
-                                min={0}
-                                max={humidityRange.max}
-                                step={1}
-                                value={humidityRange.min}
-                                onChange={(e) => handleFiltering("humidity", Number(e.target.value), true)}
-                            />
-                            <span className="range-value">Min: {humidityRange.min}%</span>
-                        </div>
-                        <div className="range-inputs-container">
-                            <input
-                                className="filter-range-input"
-                                type="range"
-                                min={humidityRange.min}
-                                max={90}
-                                step={1}
-                                value={humidityRange.max}
-                                onChange={(e) => handleFiltering("humidity", Number(e.target.value), false)}
-                            />
-                            <span className="range-value">Max: {humidityRange.max}%</span>
-                        </div>
-                    </div>
-
       
                     <div className="filter-input-group">
                         <label className="filter-label">Air Quality Range</label>
@@ -167,16 +137,44 @@ const Filtering: React.FC<FilteringProps> = ({ onFilter, onSensorFilter }) => {
                             <span className="range-value">Max: {airQualityRange.max}</span>
                         </div>
                     </div>
-                    <div>
-                    <button className = "apply-button" onClick={() => {
-                            updateFilterValues();
-                            handleSearching(sensorId);
-                        }}
-                        >
-                        Apply
-                    </button>
+                    <div className="filter-input-group">
+                        <label className="filter-label">Humidity Range</label>
+                        <div className="range-inputs-container">
+                            <input
+                                className="filter-range-input"
+                                type="range"
+                                min={0}
+                                max={humidityRange.max}
+                                step={1}
+                                value={humidityRange.min}
+                                onChange={(e) => handleFiltering("humidity", Number(e.target.value), true)}
+                            />
+                            <span className="range-value">Min: {humidityRange.min}%</span>
+                        </div>
+                        <div className="range-inputs-container">
+                            <input
+                                className="filter-range-input"
+                                type="range"
+                                min={humidityRange.min}
+                                max={90}
+                                step={1}
+                                value={humidityRange.max}
+                                onChange={(e) => handleFiltering("humidity", Number(e.target.value), false)}
+                            />
+                            <span className="range-value">Max: {humidityRange.max}%</span>
+                        </div>
                     </div>
+
+                <div>
+                <button className = "apply-button" onClick={() => {
+                    updateFilterValues();
+                    handleSearching(sensorId);
+                    }}
+                    >
+                    Apply
+                </button>
                 </div>
+            </div>
             )}
         </div>
         </>

@@ -22,6 +22,8 @@ const MAX_PAGE_SIZE = 5;
 const Dashboard: React.FC = () => {
   const [sensorData, setSensorData] = useState<SensorMetric[]>([]); 
   const [currentPage, setCurrentPage] = useState(1);
+  const [tempPageVar, setTempPageVar] = useState(1);
+  const [pageData, setPageData] = useState<SensorMetric[]>([]);
   const [sortedData, setSortedData] = useState({ metric: "sensorId", direction: "asc" });
   const [filteredData, setFilteredData] = useState({
     temperature: { min: 0, max: 40 },
@@ -39,6 +41,7 @@ const Dashboard: React.FC = () => {
       stopSimulation();
     };
   }, []);
+
   
   const processData = useMemo(() => {
     let items = [...sensorData]
@@ -67,19 +70,60 @@ const Dashboard: React.FC = () => {
     }
   },[sortedData, sensorData, filteredData, chosenSensorId]);
 
+  useEffect(() => {
+    sliceData();
+  }, [currentPage,processData]);
 
   const handleNextPage = () => {
     setCurrentPage(currentPage + 1);
+    setTempPageVar(tempPageVar + 1);
   };
 
   const handlePreviousPage = () => {
     setCurrentPage(currentPage - 1);
+    setTempPageVar(tempPageVar - 1);
   };
 
-  const startIndex = (currentPage - 1) * MAX_PAGE_SIZE;
-  const endIndex = startIndex + MAX_PAGE_SIZE;
-  const pageData = processData.slice(startIndex, endIndex);
+  const handlePageInputChange = (e:  React.ChangeEvent<HTMLInputElement>) => {
+    setTempPageVar(Number(e.target.value))
+  }
 
+  const applyPageChange = () => {
+    const maxPage = Math.ceil(sensorData.length / MAX_PAGE_SIZE);
+    
+    if (tempPageVar > maxPage) {
+      setCurrentPage(maxPage);
+      setTempPageVar(maxPage);
+    }
+    else if (tempPageVar < 1) {
+      setCurrentPage(1);
+      setTempPageVar(1);
+    }
+    else {
+      setCurrentPage(tempPageVar);
+    }
+  }
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      applyPageChange();
+    }
+  }
+  const handleBlur = () => {
+    applyPageChange();
+  }
+
+  const sliceData = () => {
+    const last_page = Math.ceil(processData.length / MAX_PAGE_SIZE);
+    const startIndex = (currentPage - 1) * MAX_PAGE_SIZE;
+    const endIndex = startIndex + MAX_PAGE_SIZE;
+    if (currentPage > last_page){
+      setCurrentPage(last_page === 0? last_page + 1: last_page);
+      setTempPageVar(last_page === 0? last_page + 1: last_page);
+    };
+    setPageData(processData.slice(startIndex, endIndex));
+
+  };
 
   const handleSort = (chosenMetric: string, direction: string) => {
     setSortedData({ metric: chosenMetric, direction: direction });
@@ -91,16 +135,17 @@ const Dashboard: React.FC = () => {
       ...prev,
       [filters[0].metric]: filters[0].range,
       [filters[1].metric]: filters[1].range,
-      [filters[1].metric]: filters[1].range
+      [filters[2].metric]: filters[2].range
       }
     });
+    setCurrentPage(1)
+    setTempPageVar(1)
   };
   
   const handleSensorIdFilter = (sensorId: string) =>{
-    setChosenSensorId(sensorId)
-  }
+    setChosenSensorId(sensorId);
+  };
      
-
 
   return (
     <div className="dashboard-container">
@@ -117,11 +162,18 @@ const Dashboard: React.FC = () => {
           <RowData key={metric.sensorId} metric={metric} />
         ))}
       </ul>
-
+      
       <div className="pagination-container">
         <button onClick={handlePreviousPage} disabled={currentPage === 1}>Prev</button>
-        <span className="page-number">{currentPage}</span>
-        <button onClick={handleNextPage} disabled={currentPage === Math.ceil(sensorData.length / MAX_PAGE_SIZE)}>Next</button>
+        <input
+          type="number"
+          value={tempPageVar}
+          onChange={handlePageInputChange}
+          onKeyDown={handleKeyDown}
+          onBlur={handleBlur}
+        />
+
+        <button onClick={handleNextPage} disabled={currentPage === Math.ceil(processData.length / MAX_PAGE_SIZE)}>Next</button>
       </div>
     </div>
   );

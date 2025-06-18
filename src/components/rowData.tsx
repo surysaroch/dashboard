@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import './rowData.css';
-import Humidity from './svgs/humidity';
-import AirQuality from './svgs/airQuality';
-import Temperature from './svgs/temperature';
+import Metric from './metric';
 
 interface SensorMetric {
   sensorId: string;
@@ -42,6 +40,28 @@ const RowData: React.FC<rowDataProps> = ({ metric }) => {
 
   const currentHumidity = metric.humidity;
   const humidityPercentage = ((currentHumidity - minHumidity) / (maxHumidity - minHumidity)) * 100;
+  
+  const metricValues: [{
+        temperature: number;
+        temperaturePercentage: number;
+    }, {
+        airQuality: number;
+        airQualityPercentage: number;
+    }, {
+        humidity: number;
+        humidityPercentage: number;
+    }] = [{
+        temperature: currentTemperature,
+        temperaturePercentage: temperaturePercentage
+    },
+    {
+        airQuality: currentAirQuality,
+        airQualityPercentage: airQualityPercentage
+    },
+    { 
+        humidity: currentHumidity,
+        humidityPercentage: humidityPercentage
+  }];
 
   return (
     <li key={metric.sensorId} onClick={handleToggleExpand} className = "row-data-container">
@@ -49,48 +69,14 @@ const RowData: React.FC<rowDataProps> = ({ metric }) => {
         <div className = "sensor-id-container"> 
           <span className = "sensor-id">{metric.sensorId}</span>
         </div>
-
         <div className="metric-container">
-          <div className="metric-row">
-              <span className="metric-icon"><Temperature color="#FF7101"/></span>
-              <div className="metric-progress">
-                <span className="metric-value">
-                  <p>{metric.temperature.toFixed(1)}%</p>
-                  <p>{temperaturePercentage.toFixed(0)}%</p>
-                  </span>
-                  <div className="outer-bar">
-                      <div className="inner-bar-temperature" style={{ width: `${temperaturePercentage}%`}}></div>
-                  </div>
-              </div>
-          </div>
-
-          <div className="metric-row">
-              <span className="metric-icon"><AirQuality color="#00C5FF"/></span>
-              <div className="metric-progress">
-                <span className="metric-value">
-                  <p>{metric.airQuality.toFixed(1)}%</p>
-                  <p style= {{color:"#d1d5db"}}>{airQualityPercentage.toFixed(0)}%</p>
-                </span>
-                  <div className="outer-bar">
-                      <div className="inner-bar-airquality" style={{ width: `${airQualityPercentage}%`, backgroundColor: '#00C5FF' }}></div>
-                  </div>
-
-              </div>
-          </div>
-
-          <div className="metric-row">
-              <span className="metric-icon"><Humidity color="#00FF19" /></span>
-              <div className="metric-progress">
-                <span className="metric-value">
-                  <p>{metric.humidity.toFixed(1)}%</p>
-                  <p>{humidityPercentage.toFixed(0)}%</p>
-                </span>
-                  <div className="outer-bar">
-                      <div className="inner-bar-humidity" style={{ width: `${humidityPercentage}%`, backgroundColor: '#00FF19' }}></div>
-                  </div>
-              </div>
-          </div>
+            <div className="metric-row">
+              <Metric metric={"temperature"} values={metricValues}/>
+              <Metric metric={"airQuality"} values={metricValues}/>
+              <Metric metric={"humidity"} values={metricValues}/>
+            </div>
         </div>
+
       </div>
 
       {isExpanded && (
