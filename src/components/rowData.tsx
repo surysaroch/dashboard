@@ -11,22 +11,22 @@ interface SensorMetric {
 };
 
 interface rowDataProps {
-  metric: SensorMetric; 
+  metric: SensorMetric;
 }
 
 const RowData: React.FC<rowDataProps> = ({ metric }) => {
 
-  const [isExpanded, setIsExpanded] = useState<boolean>(false); 
+  const [isExpanded, setIsExpanded] = useState<boolean>(false);
 
   const handleToggleExpand = () => {
-    setIsExpanded(!isExpanded); 
+    setIsExpanded(!isExpanded);
   };
 
 
-  const minTemperature = 10; 
-  const maxTemperature = 40; 
+  const minTemperature = 10;
+  const maxTemperature = 40;
 
-  const currentTemperature =  metric.temperature;
+  const currentTemperature = metric.temperature;
   const temperaturePercentage = ((currentTemperature - minTemperature) / (maxTemperature - minTemperature)) * 100;
 
   const minAirQuality = 0;
@@ -40,47 +40,47 @@ const RowData: React.FC<rowDataProps> = ({ metric }) => {
 
   const currentHumidity = metric.humidity;
   const humidityPercentage = ((currentHumidity - minHumidity) / (maxHumidity - minHumidity)) * 100;
-  
+
   const metricValues: [{
-        temperature: number;
-        temperaturePercentage: number;
-    }, {
-        airQuality: number;
-        airQualityPercentage: number;
-    }, {
-        humidity: number;
-        humidityPercentage: number;
-    }] = [{
-        temperature: currentTemperature,
-        temperaturePercentage: temperaturePercentage
-    },
-    {
-        airQuality: currentAirQuality,
-        airQualityPercentage: airQualityPercentage
-    },
-    { 
-        humidity: currentHumidity,
-        humidityPercentage: humidityPercentage
+    temperature: number;
+    temperaturePercentage: number;
+  }, {
+    airQuality: number;
+    airQualityPercentage: number;
+  }, {
+    humidity: number;
+    humidityPercentage: number;
+  }] = [{
+    temperature: currentTemperature,
+    temperaturePercentage: temperaturePercentage
+  },
+  {
+    airQuality: currentAirQuality,
+    airQualityPercentage: airQualityPercentage
+  },
+  {
+    humidity: currentHumidity,
+    humidityPercentage: humidityPercentage
   }];
 
   return (
-    <li key={metric.sensorId} onClick={handleToggleExpand} className = "row-data-container">
-      <div className = "sensor-metric-container"> 
-        <div className = "sensor-id-container"> 
-          <span className = "sensor-id">{metric.sensorId}</span>
+    <li key={metric.sensorId} onClick={handleToggleExpand} className="row-data-container">
+      <div className="sensor-metric-container">
+        <div className="sensor-id-container">
+          <span className="sensor-id">{metric.sensorId}</span>
         </div>
         <div className="metric-container">
-            <div className="metric-row">
-              <Metric metric={"temperature"} values={metricValues}/>
-              <Metric metric={"airQuality"} values={metricValues}/>
-              <Metric metric={"humidity"} values={metricValues}/>
-            </div>
+          <div className="metric-row">
+            <Metric metric={"temperature"} values={metricValues} />
+            <Metric metric={"airQuality"} values={metricValues} />
+            <Metric metric={"humidity"} values={metricValues} />
+          </div>
         </div>
 
       </div>
 
       {isExpanded && (
-        <div className = "expanded-container">
+        <div className="expanded-container">
           <p>Temperature: {metric.temperature.toFixed(2)}°C</p>
           <p>Humidity: {metric.humidity.toFixed(2)}%</p>
           <p>Air Quality: {metric.airQuality.toFixed(2)}</p>

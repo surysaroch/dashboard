@@ -1,26 +1,26 @@
 .sorting-container {
     display: flex;
-    align-items: center; 
-    gap: 0.75rem;    
-    padding-top: 0.75rem;  
+    align-items: center;
+    gap: 0.75rem;
+    padding-top: 0.75rem;
 
 
 }
 
 .sorting-container span {
-    color: #555e68;     
+    color: #555e68;
     font-size: 0.9rem;
 }
 
 
-.dropdown-container select{
+.dropdown-container select {
     font-size: 0.9rem;
     font-weight: bold;
-    color: #D3D3D3;  
+    color: #D3D3D3;
     background-color: #6366f1;
-    padding: 0.5rem 2rem 0.5rem 0.75rem; 
-    border: 1px solid #333; 
-    border-radius: 0.3rem;    
+    padding: 0.5rem 2rem 0.5rem 0.75rem;
+    border: 1px solid #333;
+    border-radius: 0.3rem;
     cursor: pointer;
     display: flex;
     justify-content: center;
@@ -33,10 +33,10 @@
 .order-toggle-button button {
     font-size: 0.9rem;
     font-weight: bold;
-    color: #D3D3D3; 
+    color: #D3D3D3;
     background-color: #6366f1;
     border: 1px solid #333;
-    border-radius: 0.3rem;      
+    border-radius: 0.3rem;
     cursor: pointer;
     width: 8.5rem;
     height: 2.5rem;
@@ -45,7 +45,7 @@
     justify-content: center;
 }
 
-.flipped-svg{
+.flipped-svg {
     rotate: 180deg;
 }
 
@@ -54,20 +54,17 @@
     .sorting-container span {
         display: none;
     }
-    .order-toggle-button p{
+
+    .order-toggle-button p {
         display: none;
     }
-    .order-toggle-button button{
+
+    .order-toggle-button button {
         width: 2.5rem;
         aspect-ratio: 1/1;
     }
-    
+
 }
 
-  
-@media (width >= 500px) {
 
-    
-}
-
-  
+@media (width >=500px) {}

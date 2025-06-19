@@ -1,16 +1,18 @@
-import React, { useEffect, useMemo, useState} from 'react';
+import React, { useEffect, useMemo, useState, useRef } from 'react';
 import SimulateRealTimeData from "../util/SimulateRealTimeData";
 import RowData from "./rowData";
 import Sorting from "./sorting";
 import Filtering from "./Filtering";
-import "./dashboard.css" 
+import Pagination from './pagination';
+import "./dashboard.css"
+
 
 interface SensorMetric {
-    sensorId: string;
-    temperature: number;
-    humidity: number;
-    airQuality: number;
-    timestamp: string;
+  sensorId: string;
+  temperature: number;
+  humidity: number;
+  airQuality: number;
+  timestamp: string;
 }
 
 interface FilterItem {
@@ -20,9 +22,8 @@ interface FilterItem {
 const MAX_PAGE_SIZE = 5;
 
 const Dashboard: React.FC = () => {
-  const [sensorData, setSensorData] = useState<SensorMetric[]>([]); 
+  const [sensorData, setSensorData] = useState<SensorMetric[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [tempPageVar, setTempPageVar] = useState(1);
   const [pageData, setPageData] = useState<SensorMetric[]>([]);
   const [sortedData, setSortedData] = useState({ metric: "sensorId", direction: "asc" });
   const [filteredData, setFilteredData] = useState({
@@ -33,7 +34,7 @@ const Dashboard: React.FC = () => {
   const [chosenSensorId, setChosenSensorId] = useState('')
 
   useEffect(() => {
-    const stopSimulation = SimulateRealTimeData(100, 1000, (updates: SensorMetric[]) => { 
+    const stopSimulation = SimulateRealTimeData(100, 1000, (updates: SensorMetric[]) => {
       setSensorData(updates);
     });
 
@@ -42,88 +43,51 @@ const Dashboard: React.FC = () => {
     };
   }, []);
 
-  
+
   const processData = useMemo(() => {
     let items = [...sensorData]
     items = items.filter(item => {
-      const filteredTemp = (item.temperature >= filteredData.temperature.min) && ( item.temperature <= filteredData.temperature.max);
-      const filteredAir = (item.airQuality >= filteredData.airQuality.min) && ( item.airQuality <= filteredData.airQuality.max);
-      const filteredHumidity = (item.humidity >= filteredData.humidity.min) && ( item.humidity <= filteredData.humidity.max);
+      const filteredTemp = (item.temperature >= filteredData.temperature.min) && (item.temperature <= filteredData.temperature.max);
+      const filteredAir = (item.airQuality >= filteredData.airQuality.min) && (item.airQuality <= filteredData.airQuality.max);
+      const filteredHumidity = (item.humidity >= filteredData.humidity.min) && (item.humidity <= filteredData.humidity.max);
       const filteredSensorId = chosenSensorId === '' || item.sensorId.toLowerCase().includes(chosenSensorId.toLowerCase());
       return filteredTemp && filteredAir && filteredHumidity && filteredSensorId;
     })
 
-    if(sortedData.metric === "sensorId"){
-      console.log("jhonson")
-      return sortedData.direction === "asc"? items: items.reverse()
+    if (sortedData.metric === "sensorId") {
+      // console.log("jhonson")
+      return sortedData.direction === "asc" ? items : items.reverse()
     }
-    else{
-      items.sort((a,b) => {
+    else {
+      items.sort((a, b) => {
         const valA = a[sortedData.metric as keyof SensorMetric];
         const valB = b[sortedData.metric as keyof SensorMetric];
         if (typeof valA === "number" && typeof valB === "number") {
           return sortedData.direction === 'asc' ? valA - valB : valB - valA;
         }
-        else{return 0}
+        else { return 0 }
       });
-      return items;  
+      return items;
     }
-  },[sortedData, sensorData, filteredData, chosenSensorId]);
+  }, [sortedData, sensorData, filteredData, chosenSensorId]);
 
-  useEffect(() => {
-    sliceData();
-  }, [currentPage,processData]);
 
-  const handleNextPage = () => {
-    setCurrentPage(currentPage + 1);
-    setTempPageVar(tempPageVar + 1);
-  };
-
-  const handlePreviousPage = () => {
-    setCurrentPage(currentPage - 1);
-    setTempPageVar(tempPageVar - 1);
-  };
-
-  const handlePageInputChange = (e:  React.ChangeEvent<HTMLInputElement>) => {
-    setTempPageVar(Number(e.target.value))
-  }
-
-  const applyPageChange = () => {
-    const maxPage = Math.ceil(sensorData.length / MAX_PAGE_SIZE);
-    
-    if (tempPageVar > maxPage) {
-      setCurrentPage(maxPage);
-      setTempPageVar(maxPage);
-    }
-    else if (tempPageVar < 1) {
-      setCurrentPage(1);
-      setTempPageVar(1);
-    }
-    else {
-      setCurrentPage(tempPageVar);
-    }
-  }
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      applyPageChange();
-    }
-  }
-  const handleBlur = () => {
-    applyPageChange();
-  }
 
   const sliceData = () => {
     const last_page = Math.ceil(processData.length / MAX_PAGE_SIZE);
     const startIndex = (currentPage - 1) * MAX_PAGE_SIZE;
     const endIndex = startIndex + MAX_PAGE_SIZE;
-    if (currentPage > last_page){
-      setCurrentPage(last_page === 0? last_page + 1: last_page);
-      setTempPageVar(last_page === 0? last_page + 1: last_page);
+    if (currentPage > last_page) {
+      setCurrentPage(last_page === 0 ? last_page + 1 : last_page);
     };
     setPageData(processData.slice(startIndex, endIndex));
 
   };
+
+  useMemo(() => {
+    sliceData();
+  }, [currentPage, processData]);
+
 
   const handleSort = (chosenMetric: string, direction: string) => {
     setSortedData({ metric: chosenMetric, direction: direction });
@@ -131,28 +95,31 @@ const Dashboard: React.FC = () => {
 
   const handleFilterChange = (filters: FilterItem[]) => {
     setFilteredData(prev => {
-      return{
-      ...prev,
-      [filters[0].metric]: filters[0].range,
-      [filters[1].metric]: filters[1].range,
-      [filters[2].metric]: filters[2].range
+      return {
+        ...prev,
+        [filters[0].metric]: filters[0].range,
+        [filters[1].metric]: filters[1].range,
+        [filters[2].metric]: filters[2].range
       }
     });
     setCurrentPage(1)
-    setTempPageVar(1)
   };
-  
-  const handleSensorIdFilter = (sensorId: string) =>{
+
+  const handleSensorIdFilter = (sensorId: string) => {
     setChosenSensorId(sensorId);
   };
-     
+
+  const handlePagination = (page: number) => {
+    setCurrentPage(page);
+  };
+
 
   return (
     <div className="dashboard-container">
       <div className="heading-container">
         <h1>Live Sensor Data</h1>
         <div className="features-container">
-          <div><Filtering onFilter={handleFilterChange} onSensorFilter={handleSensorIdFilter}/></div>
+          <div><Filtering onFilter={handleFilterChange} onSensorFilter={handleSensorIdFilter} /></div>
           <div><Sorting onSort={handleSort} /></div>
         </div>
       </div>
@@ -162,18 +129,9 @@ const Dashboard: React.FC = () => {
           <RowData key={metric.sensorId} metric={metric} />
         ))}
       </ul>
-      
-      <div className="pagination-container">
-        <button onClick={handlePreviousPage} disabled={currentPage === 1}>Prev</button>
-        <input
-          type="number"
-          value={tempPageVar}
-          onChange={handlePageInputChange}
-          onKeyDown={handleKeyDown}
-          onBlur={handleBlur}
-        />
 
-        <button onClick={handleNextPage} disabled={currentPage === Math.ceil(processData.length / MAX_PAGE_SIZE)}>Next</button>
+      <div className="pagination-container">
+        <Pagination onChange={handlePagination} currentPage={currentPage} processDataLength={processData.length} maxPageSize={MAX_PAGE_SIZE} />
       </div>
     </div>
   );
