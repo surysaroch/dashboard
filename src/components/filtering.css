@@ -71,6 +71,17 @@
     font-weight: bold;
 }
 
+.clear-button {
+    background-color: #DC2525;
+    color: #fff;
+    width: 100%;
+    padding: 0.6rem 0.75rem;
+    border-radius: 0.5rem;
+    border: 1px solid #4b5563;
+    cursor: pointer;
+    font-weight: bold;
+}
+
 input[type="range"].filter-range-input {
     accent-color: #6366f1;
     cursor: pointer;

@@ -62,12 +62,21 @@ const Filtering: React.FC<FilteringProps> = ({ onFilter, onSensorFilter }) => {
     }
 
     const clearAll = () => {
-        setTemperatureRange({ min: 10, max: 40 });
-        setHumidityRange({ min: 0, max: 90 });
-        setAirQualityRange({ min: 0, max: 200 });
+        const resetTemperature = { min: 10, max: 40 };
+        const resetHumidity = { min: 0, max: 90 };
+        const resetAirQuality = { min: 0, max: 200 };
+        setTemperatureRange(resetTemperature);
+        setHumidityRange(resetHumidity);
+        setAirQualityRange(resetAirQuality);
         setSensorId("");
+        onFilter([
+            { metric: "temperature", range: resetTemperature },
+            { metric: "humidity", range: resetHumidity },
+            { metric: "airQuality", range: resetAirQuality }
+        ]);
+        onSensorFilter(""); 
     };
-
+    
     const handleSearching = (searchedSensorId: string) => {
         onSensorFilter(searchedSensorId);
     };
