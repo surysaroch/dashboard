@@ -50,6 +50,7 @@ body {
     flex-grow: 1;
     min-width: 0;
     padding-left: 2rem;
+    width: 100%;
 }
 
 .metric-row {

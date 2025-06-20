@@ -70,13 +70,10 @@ const RowData: React.FC<rowDataProps> = ({ metric }) => {
           <span className="sensor-id">{metric.sensorId}</span>
         </div>
         <div className="metric-container">
-          <div className="metric-row">
-            <Metric metric={"temperature"} values={metricValues} />
-            <Metric metric={"airQuality"} values={metricValues} />
-            <Metric metric={"humidity"} values={metricValues} />
-          </div>
+          <Metric metric={"temperature"} values={metricValues} />
+          <Metric metric={"airQuality"} values={metricValues} />
+          <Metric metric={"humidity"} values={metricValues} />
         </div>
-
       </div>
 
       {isExpanded && (
