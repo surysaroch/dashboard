@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 interface paginationType {
   onChange: (currentPage: number) => void;
@@ -6,49 +6,54 @@ interface paginationType {
   maxPageSize: number;
   currentPage: number;
 }
+
+
 const Pagination: React.FC<paginationType> = ({ onChange, currentPage, processDataLength, maxPageSize }) => {
   const inputRef = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    if (inputRef.current) inputRef.current.value = currentPage.toString();
+  }, [currentPage]);
 
   const handleNextPage = () => {
     onChange(currentPage + 1);
-    if (inputRef.current) inputRef.current.value = (currentPage + 1).toString();
-
   };
 
   const handlePreviousPage = () => {
     onChange(currentPage - 1);
-    if (inputRef.current) inputRef.current.value = (currentPage - 1).toString();
   };
 
 
   const applyPageChange = () => {
     const maxPage = Math.ceil(processDataLength / maxPageSize);
-    const inputPage = (inputRef.current) && inputRef.current.value
+    const inputPage = Number((inputRef.current) && inputRef.current.value);
 
-    if ((inputPage) && Number(inputPage) > maxPage) {
-      onChange(maxPage);
-      if (inputRef.current) inputRef.current.value = maxPage.toString();
-    }
-    else if ((inputPage) && Number(inputPage) < 1) {
-      onChange(1);
+    if (!inputPage || isNaN(Number(inputPage))) {
       if (inputRef.current) inputRef.current.value = "1";
+      onChange(1);
+      return;
     }
-    else {
-      console.log(inputPage)
-      onChange(Number(inputPage));
-      console.log("This is current page" + currentPage)
 
+
+    if (inputPage > maxPage) {
+      if (inputRef.current) inputRef.current.value = maxPage.toString();
+      onChange(maxPage);
+    } else if (inputPage < 1) {
+      if (inputRef.current) inputRef.current.value = "1";
+      onChange(1);
+    } else {
+      onChange(inputPage);
     }
-  }
+  };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       applyPageChange();
-    }
-  }
+    };
+  };
+
   const handleBlur = () => {
     applyPageChange();
-  }
+  };
 
   return (
     <>
@@ -63,8 +68,8 @@ const Pagination: React.FC<paginationType> = ({ onChange, currentPage, processDa
       <button onClick={handleNextPage} disabled={currentPage === Math.ceil(processDataLength / maxPageSize)}>Next</button>
     </>
 
-  )
+  );
 
-}
+};
 
 export default Pagination

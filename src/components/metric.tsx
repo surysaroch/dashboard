@@ -34,10 +34,10 @@ const Metric: React.FC<metricType> = ({ metric, values }) => {
             <div className="metric-progress">
                 <span className="metric-value">
                     <p>{(metric === 'temperature' ?
-                        values[0].temperature.toFixed(1) :
+                        values[0].temperature.toFixed(1) + "°C" :
                         metric === 'airQuality' ?
                             values[1].airQuality.toFixed(1) :
-                            values[2].humidity.toFixed(1))}%
+                            values[2].humidity.toFixed(1) + "%")}
                     </p>
                     <p>{(metric === 'temperature' ?
                         values[0].temperaturePercentage.toFixed(0) :

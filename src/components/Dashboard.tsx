@@ -123,17 +123,21 @@ const Dashboard: React.FC = () => {
           <div><Sorting onSort={handleSort} /></div>
         </div>
       </div>
+      {pageData && pageData.length > 0 ? (
+        <>
+          <ul>
+            {pageData.map(metric => (
+              <RowData key={metric.sensorId} metric={metric} />
+            ))}
+          </ul>
 
-      <ul>
-        {pageData.map(metric => (
-          <RowData key={metric.sensorId} metric={metric} />
-        ))}
-      </ul>
-
-      <div className="pagination-container">
-        <Pagination onChange={handlePagination} currentPage={currentPage} processDataLength={processData.length} maxPageSize={MAX_PAGE_SIZE} />
-      </div>
+          <div className="pagination-container">
+            <Pagination onChange={handlePagination} currentPage={currentPage} processDataLength={processData.length} maxPageSize={MAX_PAGE_SIZE} />
+          </div>
+        </>
+      ) : <p className = "no-match-output">No Data matches the current filter</p>}
     </div>
+
   );
 };
 
