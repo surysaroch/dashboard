@@ -60,7 +60,6 @@ const Metric: React.FC<metricType> = ({ metric, values }) => {
             </div>
         </div>
 
-    )
-}
-
+    );
+};
 export default Metric

@@ -1,11 +1,12 @@
-import React, { useEffect, useMemo, useState, useRef } from 'react';
-import SimulateRealTimeData from "../util/SimulateRealTimeData";
+import React, { useEffect, useMemo, useState, useRef, useContext } from 'react';
+
 import RowData from "./rowData";
 import Sorting from "./sorting";
 import Filtering from "./Filtering";
 import Pagination from './pagination';
 import "./dashboard.css"
-
+// import Pins from './pins';
+import { DashboardContext } from '../context/DashboardContext';
 
 interface SensorMetric {
   sensorId: string;
@@ -22,7 +23,7 @@ interface FilterItem {
 const MAX_PAGE_SIZE = 5;
 
 const Dashboard: React.FC = () => {
-  const [sensorData, setSensorData] = useState<SensorMetric[]>([]);
+  const { sensorData } = useContext(DashboardContext);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageData, setPageData] = useState<SensorMetric[]>([]);
   const [sortedData, setSortedData] = useState({ metric: "sensorId", direction: "asc" });
@@ -33,17 +34,7 @@ const Dashboard: React.FC = () => {
   });
   const [chosenSensorId, setChosenSensorId] = useState('')
 
-  useEffect(() => {
-    const stopSimulation = SimulateRealTimeData(100, 1000, (updates: SensorMetric[]) => {
-      setSensorData(updates);
-    });
-
-    return () => {
-      stopSimulation();
-    };
-  }, []);
-
-
+  console.log(sensorData)
   const processData = useMemo(() => {
     let items = [...sensorData]
     items = items.filter(item => {
@@ -119,6 +110,8 @@ const Dashboard: React.FC = () => {
       <div className="heading-container">
         <h1>Live Sensor Data</h1>
         <div className="features-container">
+          
+
           <div><Filtering onFilter={handleFilterChange} onSensorFilter={handleSensorIdFilter} /></div>
           <div><Sorting onSort={handleSort} /></div>
         </div>
