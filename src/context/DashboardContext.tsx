@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect, type ReactNode } from 'react';
+import { useMemo, createContext, useState, useEffect, type ReactNode } from 'react';
 import SimulateRealTimeData from "../util/SimulateRealTimeData";
 
 interface SensorMetric {
@@ -27,13 +27,19 @@ export default function DashboardContextProvider({ children }: DashboardContextP
     useEffect(() => {
         const stopSimulation = SimulateRealTimeData(100, 1000, (updates: SensorMetric[]) => {
           setSensorData(updates);
-          console.log(updates)
+          
+          
         });
 
         return () => {
           stopSimulation();
         };
     }, []);
+
+    const pinData = useMemo(() => {
+    
+    }, [sensorData]);
+
 
     const value = {
         sensorData,

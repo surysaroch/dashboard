@@ -34,7 +34,6 @@ const Dashboard: React.FC = () => {
   });
   const [chosenSensorId, setChosenSensorId] = useState('')
 
-  console.log(sensorData)
   const processData = useMemo(() => {
     let items = [...sensorData]
     items = items.filter(item => {
