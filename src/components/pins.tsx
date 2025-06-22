@@ -1,53 +1,83 @@
-// interface pinsProp {
-//     pins: [{}]
-// }
+import { useContext, useState } from 'react';
+import { DashboardContext } from '../context/DashboardContext';
+import Metric from '../components/metric';
 
-// const Pins: React.FC<pinsProp> = (pins) => {
+type MetricValues = [{
+    temperature: number;
+    temperaturePercentage: number;
+}, {
+    airQuality: number;
+    airQualityPercentage: number;
+}, {
+    humidity: number;
+    humidityPercentage: number;
+}];
+const Pins = () => {
+    const { pinnedData, sensorData } = useContext(DashboardContext);
+    const [isExpanded, setIsExpanded] = useState(false);
 
-//     return (
-//         {
-//             pins.map(metric => (
-//                 <div className="metric-row">
-//                     <span className="metric-icon">
-//                         {metric.temperature === 'temperature' ? (
-//                             <Temperature color="#FF7101" />
-//                         ) : metric.humidity === 'humidity' ? (
-//                             <Humidity color="#00FF00" />
-//                         ) : (
-//                             <AirQuality color="#00A3FF" />
-//                         )}
-//                     </span>
-//                     <div className="metric-progress">
-//                         <span className="metric-value">
-//                             <p>{(metric === 'temperature' ?
-//                                 values[0].temperature.toFixed(1) + "°C" :
-//                                 metric === 'airQuality' ?
-//                                     values[1].airQuality.toFixed(1) :
-//                                     values[2].humidity.toFixed(1) + "%")}
-//                             </p>
-//                             <p>{(metric === 'temperature' ?
-//                                 values[0].temperaturePercentage.toFixed(0) :
-//                                 metric === 'airQuality' ?
-//                                     values[1].airQualityPercentage.toFixed(0) :
-//                                     values[2].humidityPercentage.toFixed(0))}%
-//                             </p>
-//                         </span>
-//                         <div className="outer-bar">
-//                             <div className={`inner-bar-${metric}`}
-//                                 style={{
-//                                     width:
-//                                         `${metric === 'temperature' ? values[0].temperaturePercentage :
-//                                             metric === 'airQuality' ? values[1].airQualityPercentage :
-//                                                 values[2].humidity
+    return (
+        <div>
+            <button onClick={() => setIsExpanded(!isExpanded)}>Pins</button>
+            {
+                [...pinnedData].map(sensorId => {
+                    const sensor = sensorData.find(s => s.sensorId === sensorId);
+                    if (!sensor) return null;
 
-//                                         }%`
-//                                 }}></div>
-//                         </div>
-//                     </div>
-//                 </div>
-//             ))
-//         }
-//     )
+                    const minTemperature = 10, maxTemperature = 40;
+                    const minAirQuality = 0, maxAirQuality = 200;
+                    const minHumidity = 0, maxHumidity = 90;
 
-// };
-// export default Pins;
+                    const metricValues: MetricValues= [
+                        {
+                            temperature: sensor.temperature,
+                            temperaturePercentage: ((sensor.temperature - minTemperature) / (maxTemperature - minTemperature)) * 100
+                        },
+                        {
+                            airQuality: sensor.airQuality,
+                            airQualityPercentage: ((sensor.airQuality - minAirQuality) / (maxAirQuality - minAirQuality)) * 100
+                        },
+                        {
+                            humidity: sensor.humidity,
+                            humidityPercentage: ((sensor.humidity - minHumidity) / (maxHumidity - minHumidity)) * 100
+                        }
+                    ];
+
+                    return (
+                        <div>
+                            {isExpanded && (
+                                <div>
+                                    <div key={sensor.sensorId} className="metric-row">
+                                        <div className="sensor-metric-container">
+                                            <div className="sensor-id-container">
+                                                <span className="sensor-id">{sensor.sensorId}</span>
+                                            </div>
+                                            <div className="metric-container">
+                                                <Metric metric={"temperature"} values={metricValues} />
+                                                <Metric metric={"airQuality"} values={metricValues} />
+                                                <Metric metric={"humidity"} values={metricValues} />
+                                            </div>
+                                        </div>
+
+
+
+                                        <div className="expanded-container">
+                                            <p>Temperature: {sensor.temperature.toFixed(2)}°C</p>
+                                            <p>Humidity: {sensor.humidity.toFixed(2)}%</p>
+                                            <p>Air Quality: {sensor.airQuality.toFixed(2)}</p>
+                                            <p>Timestamp: {new Date(sensor.timestamp).toLocaleString()}</p>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            )}
+                        </div>
+                    );
+
+
+                })}
+        </div>
+    );
+};
+export default Pins;

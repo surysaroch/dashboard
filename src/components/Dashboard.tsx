@@ -5,7 +5,7 @@ import Sorting from "./sorting";
 import Filtering from "./Filtering";
 import Pagination from './pagination';
 import "./dashboard.css"
-// import Pins from './pins';
+import Pins from './pins';
 import { DashboardContext } from '../context/DashboardContext';
 
 interface SensorMetric {
@@ -33,6 +33,7 @@ const Dashboard: React.FC = () => {
     airQuality: { min: 0, max: 200 }
   });
   const [chosenSensorId, setChosenSensorId] = useState('')
+
 
   const processData = useMemo(() => {
     let items = [...sensorData]
@@ -110,7 +111,7 @@ const Dashboard: React.FC = () => {
         <h1>Live Sensor Data</h1>
         <div className="features-container">
           
-
+          <div><Pins /></div>
           <div><Filtering onFilter={handleFilterChange} onSensorFilter={handleSensorIdFilter} /></div>
           <div><Sorting onSort={handleSort} /></div>
         </div>

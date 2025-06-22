@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import './rowData.css';
 import Metric from './metric';
+import { DashboardContext } from '../context/DashboardContext';
 
 interface SensorMetric {
   sensorId: string;
@@ -15,7 +16,7 @@ interface rowDataProps {
 }
 
 const RowData: React.FC<rowDataProps> = ({ metric }) => {
-
+  const { pinnedDataFunction } = useContext(DashboardContext);
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
 
   const handleToggleExpand = () => {
@@ -65,7 +66,7 @@ const RowData: React.FC<rowDataProps> = ({ metric }) => {
 
   return (
     <li key={metric.sensorId} onClick={handleToggleExpand} className="row-data-container">
-      <button className="pinned-button" onClick={}>pin</button>
+      <button className="pinned-button" onClick={(e) =>{e.stopPropagation(); pinnedDataFunction(metric.sensorId)}}>pin</button>
       <div className="sensor-metric-container">
         <div className="sensor-id-container">
           <span className="sensor-id">{metric.sensorId}</span>

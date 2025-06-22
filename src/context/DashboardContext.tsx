@@ -11,12 +11,14 @@ interface SensorMetric {
 
 interface DashboardContextType {
     sensorData: SensorMetric[];
-    pinnedData: Set<string>
+    pinnedData: Set<string>,
+    pinnedDataFunction: (sensorId: string) => void
 }
 
 export const DashboardContext = createContext<DashboardContextType>({
     sensorData: [],
-    pinnedData:  new Set<string>()
+    pinnedData: new Set<string>(),
+    pinnedDataFunction: () => {}, 
 });
 
 interface DashboardContextProviderProps {
@@ -25,28 +27,38 @@ interface DashboardContextProviderProps {
 
 export default function DashboardContextProvider({ children }: DashboardContextProviderProps) {
     const [sensorData, setSensorData] = useState<SensorMetric[]>([]);
+    const [pinnedData, setPinnedData] = useState<Set<string>>(new Set());
 
     useEffect(() => {
         const stopSimulation = SimulateRealTimeData(100, 1000, (updates: SensorMetric[]) => {
-          setSensorData(updates);
-          
-          
+            setSensorData(updates);
+
+
         });
 
         return () => {
-          stopSimulation();
+            stopSimulation();
         };
     }, []);
 
-    const pinData = useMemo(() => {
-        
-    }, [isExpanded]);
-
+    const pinnedDataFunction = (sensorId: string) => {
+        setPinnedData(prev => {
+            const newSet = new Set(prev);
+            if (newSet.has(sensorId)) {
+                newSet.delete(sensorId); 
+            } else {
+                newSet.add(sensorId);
+            }
+            return newSet;
+        });
+    };
 
     const value = {
         sensorData,
-        pinnedData: new Set<string>()
+        pinnedData,
+        pinnedDataFunction
     };
+
 
 
     return (

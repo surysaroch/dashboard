@@ -5,10 +5,11 @@ import Temperature from './svgs/temperature';
 
 interface metricType {
     metric: 'temperature' | 'airQuality' | 'humidity'
-    values: [{
-        temperature: number
-        temperaturePercentage: number
-    },
+    values: [
+        {
+            temperature: number
+            temperaturePercentage: number
+        },
         {
             airQuality: number
             airQualityPercentage: number
