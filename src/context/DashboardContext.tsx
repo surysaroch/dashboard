@@ -11,10 +11,12 @@ interface SensorMetric {
 
 interface DashboardContextType {
     sensorData: SensorMetric[];
+    pinnedData: Set<string>
 }
 
 export const DashboardContext = createContext<DashboardContextType>({
     sensorData: [],
+    pinnedData:  new Set<string>()
 });
 
 interface DashboardContextProviderProps {
@@ -37,12 +39,13 @@ export default function DashboardContextProvider({ children }: DashboardContextP
     }, []);
 
     const pinData = useMemo(() => {
-    
-    }, [sensorData]);
+        
+    }, [isExpanded]);
 
 
     const value = {
         sensorData,
+        pinnedData: new Set<string>()
     };
 
 

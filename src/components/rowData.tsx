@@ -65,7 +65,7 @@ const RowData: React.FC<rowDataProps> = ({ metric }) => {
 
   return (
     <li key={metric.sensorId} onClick={handleToggleExpand} className="row-data-container">
-      <button className="pinned-button">pin</button>
+      <button className="pinned-button" onClick={}>pin</button>
       <div className="sensor-metric-container">
         <div className="sensor-id-container">
           <span className="sensor-id">{metric.sensorId}</span>
