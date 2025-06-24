@@ -1,3 +1,4 @@
+import React from "react"
 import { useState } from "react";
 import Arrow from "./svg_components/Arrow";
 
@@ -46,4 +47,4 @@ const Sorting: React.FC<SortingProps> = ({ onSort }) => {
     );
 };
 
-export default Sorting;
+export default React.memo(Sorting);

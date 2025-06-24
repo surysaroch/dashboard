@@ -1,7 +1,9 @@
-import { useState } from "react";
+import React from "react"
+import { useState, useCallback } from "react";
 import "./svg_components/Filter.tsx";
 import Filter from "./svg_components/Filter.tsx";
 import Sliders from "./Sliders.tsx";
+
 
 interface FilterItem {
     metric: string;
@@ -20,7 +22,7 @@ const Filtering: React.FC<FilteringProps> = ({ onFilter, onSensorFilter }) => {
     const [humidityRange, setHumidityRange] = useState({ min: 0, max: 90 })
     const [sensorId, setSensorId] = useState("")
 
-    const handleFiltering = (metric: string, value: number, isMin: boolean) => {
+    const handleFiltering = useCallback((metric: string, value: number, isMin: boolean) => {
         switch (metric) {
             case "Temperature":
                 setTemperatureRange(prev => ({
@@ -40,7 +42,7 @@ const Filtering: React.FC<FilteringProps> = ({ onFilter, onSensorFilter }) => {
                     [isMin ? "min" : "max"]: value
                 }));
         }
-    }
+    },[]);
 
     const updateFilterValues = () => {
         onFilter([
@@ -76,9 +78,9 @@ const Filtering: React.FC<FilteringProps> = ({ onFilter, onSensorFilter }) => {
         onSensorFilter(""); 
     };
     
-    const handleSearching = (searchedSensorId: string) => {
+    const handleSearching = useCallback((searchedSensorId: string) => {
         onSensorFilter(searchedSensorId);
-    };
+    },[]);
 
     return (
         <>
@@ -122,4 +124,4 @@ const Filtering: React.FC<FilteringProps> = ({ onFilter, onSensorFilter }) => {
     )
 }
 
-export default Filtering;  
+export default React.memo(Filtering);

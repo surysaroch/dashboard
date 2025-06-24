@@ -51,12 +51,12 @@ const Metric: React.FC<metricType> = ({ metric, values }) => {
                             values[2].humidity.toFixed(1) + "%")}
                     </p>
 
-                    <p>{(metric === 'temperature' ?
+                    <p>({(metric === 'temperature' ?
                         values[0].temperaturePercentage.toFixed(0) :
                         metric === 'airQuality' ?
                             values[1].airQualityPercentage.toFixed(0) :
                             values[2].humidityPercentage.toFixed(0))}%
-                    </p>
+                    )</p>
 
                 </span>
                 <div className="outer-bar">

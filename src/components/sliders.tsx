@@ -1,3 +1,4 @@
+import React from "react";
 interface sliderProps {
     onSlide: (metric: string, value: number, isMin: boolean) => void;
     metric: string;
@@ -43,4 +44,4 @@ const Sliders: React.FC<sliderProps> = ({ onSlide, metric, range }) => {
     );
 };
 
-export default Sliders;
+export default React.memo(Sliders);

@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useContext } from 'react';
+import React, { useMemo, useState, useContext, useCallback } from 'react';
 
 import RowData from "./RowData";
 import Sorting from "./Sorting";
@@ -32,7 +32,6 @@ const Dashboard: React.FC = () => {
     airQuality: { min: 0, max: 200 }
   });
   const [chosenSensorId, setChosenSensorId] = useState('')
-
 
   const processData = useMemo(() => {
     let items = []
@@ -85,11 +84,11 @@ const Dashboard: React.FC = () => {
   }, [currentPage, processData]);
 
 
-  const handleSort = (chosenMetric: string, direction: string) => {
+  const handleSort = useCallback((chosenMetric: string, direction: string) => {
     setSortedData({ metric: chosenMetric, direction: direction });
-  };
+  },[]);
 
-  const handleFilterChange = (filters: FilterItem[]) => {
+  const handleFilterChange = useCallback((filters: FilterItem[]) => {
     setFilteredData(prev => {
       return {
         ...prev,
@@ -99,15 +98,16 @@ const Dashboard: React.FC = () => {
       }
     });
     setCurrentPage(1)
-  };
+  }, []);
 
-  const handleSensorIdFilter = (sensorId: string) => {
+  const handleSensorIdFilter = useCallback((sensorId: string) => {
     setChosenSensorId(sensorId);
-  };
 
-  const handlePagination = (page: number) => {
+  },[]);
+
+  const handlePagination = useCallback((page: number) => {
     setCurrentPage(page);
-  };
+  },[]);
 
 
   return (

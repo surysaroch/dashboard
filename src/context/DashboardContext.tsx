@@ -35,7 +35,7 @@ export default function DashboardContextProvider({ children }: DashboardContextP
     const [latestSensorData, setLatestSensorData] = useState<Record<string, SensorMetric[]>>({});
 
     useEffect(() => {
-        const stopSimulation = SimulateRealTimeData(100, 1000, (updates: SensorMetric[]) => {
+        const stopSimulation = SimulateRealTimeData(100, 3000, (updates: SensorMetric[]) => {
             setSensorData(updates);
             setLatestSensorData(prev => {
                 const updated: Record<string, SensorMetric[]> = { ...prev };
@@ -55,9 +55,7 @@ export default function DashboardContextProvider({ children }: DashboardContextP
             stopSimulation();
         };
     }, []);
-    useEffect(() => {
-        console.log(latestSensorData);
-    }, [latestSensorData]);
+
     const pinnedDataFunction = (sensorId: string) => {
         setPinnedData(prev => {
             const newSet = new Set(prev);

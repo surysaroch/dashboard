@@ -1,3 +1,4 @@
+import React from "react"
 import { useEffect, useRef } from "react";
 
 interface paginationType {
@@ -72,4 +73,4 @@ const Pagination: React.FC<paginationType> = ({ onChange, currentPage, processDa
 
 };
 
-export default Pagination
+export default React.memo(Pagination)

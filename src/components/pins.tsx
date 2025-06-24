@@ -1,3 +1,4 @@
+import React from "react"
 import { useContext, useState } from 'react';
 import { DashboardContext } from '../context/DashboardContext';
 import Metric from './Metric';
@@ -25,7 +26,7 @@ const Pins = () => {
             {isExpanded && (
                 <div className="pinned-items-panel">
                     {
-                        pinnedData.size === 0? (<div>You have no pins</div>):
+                        pinnedData.size === 0? (<div className="no-pins-message">You Have No Pins</div>):
                         [...pinnedData].map(sensorId => {
                             const sensor = sensorData.find(s => s.sensorId === sensorId);
                             if (!sensor) return null;
@@ -88,4 +89,4 @@ const Pins = () => {
         </div>
     );
 };
-export default Pins;
+export default React.memo(Pins);
