@@ -1,6 +1,8 @@
 import { useContext, useState } from 'react';
 import { DashboardContext } from '../context/DashboardContext';
-import Metric from '../components/metric';
+import Metric from './Metric';
+import Unpin from './svg_components/Unpix';
+import Pin from './svg_components/Pin';
 
 type MetricValues = [{
     temperature: number;
@@ -13,41 +15,46 @@ type MetricValues = [{
     humidityPercentage: number;
 }];
 const Pins = () => {
-    const { pinnedData, sensorData } = useContext(DashboardContext);
+    const { pinnedData, sensorData, pinnedDataFunction } = useContext(DashboardContext);
     const [isExpanded, setIsExpanded] = useState(false);
 
     return (
-        <div>
-            <button onClick={() => setIsExpanded(!isExpanded)}>Pins</button>
-            {
-                [...pinnedData].map(sensorId => {
-                    const sensor = sensorData.find(s => s.sensorId === sensorId);
-                    if (!sensor) return null;
+        <div className="pins-main-container">
+            <button className="pins-toggle-button" onClick={() => setIsExpanded(!isExpanded)}>
+                <Pin />Pins ({pinnedData.size})</button>
+            {isExpanded && (
+                <div className="pinned-items-panel">
+                    {
+                        pinnedData.size === 0? (<div>You have no pins</div>):
+                        [...pinnedData].map(sensorId => {
+                            const sensor = sensorData.find(s => s.sensorId === sensorId);
+                            if (!sensor) return null;
 
-                    const minTemperature = 10, maxTemperature = 40;
-                    const minAirQuality = 0, maxAirQuality = 200;
-                    const minHumidity = 0, maxHumidity = 90;
+                            const minTemperature = 10, maxTemperature = 40;
+                            const minAirQuality = 0, maxAirQuality = 200;
+                            const minHumidity = 0, maxHumidity = 90;
 
-                    const metricValues: MetricValues= [
-                        {
-                            temperature: sensor.temperature,
-                            temperaturePercentage: ((sensor.temperature - minTemperature) / (maxTemperature - minTemperature)) * 100
-                        },
-                        {
-                            airQuality: sensor.airQuality,
-                            airQualityPercentage: ((sensor.airQuality - minAirQuality) / (maxAirQuality - minAirQuality)) * 100
-                        },
-                        {
-                            humidity: sensor.humidity,
-                            humidityPercentage: ((sensor.humidity - minHumidity) / (maxHumidity - minHumidity)) * 100
-                        }
-                    ];
+                            const metricValues: MetricValues = [
+                                {
+                                    temperature: sensor.temperature,
+                                    temperaturePercentage: ((sensor.temperature - minTemperature) / (maxTemperature - minTemperature)) * 100
+                                },
+                                {
+                                    airQuality: sensor.airQuality,
+                                    airQualityPercentage: ((sensor.airQuality - minAirQuality) / (maxAirQuality - minAirQuality)) * 100
+                                },
+                                {
+                                    humidity: sensor.humidity,
+                                    humidityPercentage: ((sensor.humidity - minHumidity) / (maxHumidity - minHumidity)) * 100
+                                }
+                            ];
 
-                    return (
-                        <div>
-                            {isExpanded && (
-                                <div>
-                                    <div key={sensor.sensorId} className="metric-row">
+                            return (
+                                <div key={sensorId} className="pinned-item-content-wrapper">
+                                    <div>
+                                        <button className="unpin-button" onClick={() => (pinnedDataFunction(sensor.sensorId))}>
+                                            <Unpin />
+                                        </button>
                                         <div className="sensor-metric-container">
                                             <div className="sensor-id-container">
                                                 <span className="sensor-id">{sensor.sensorId}</span>
@@ -68,15 +75,16 @@ const Pins = () => {
                                             <p>Timestamp: {new Date(sensor.timestamp).toLocaleString()}</p>
                                         </div>
 
+
                                     </div>
 
                                 </div>
-                            )}
-                        </div>
-                    );
+                            );
 
 
-                })}
+                        })}
+                </div>
+            )}
         </div>
     );
 };

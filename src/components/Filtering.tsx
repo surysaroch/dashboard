@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
-import "./filtering.css";
-import "./svgs/filter.tsx";
-import Filter from "./svgs/filter.tsx";
-import Sliders from "./sliders.tsx";
+import { useState } from "react";
+import "./svg_components/Filter.tsx";
+import Filter from "./svg_components/Filter.tsx";
+import Sliders from "./Sliders.tsx";
 
 interface FilterItem {
     metric: string;
@@ -62,9 +61,9 @@ const Filtering: React.FC<FilteringProps> = ({ onFilter, onSensorFilter }) => {
     }
 
     const clearAll = () => {
-        const resetTemperature = { min: 10, max: 40 };
-        const resetHumidity = { min: 0, max: 90 };
-        const resetAirQuality = { min: 0, max: 200 };
+        const resetTemperature: { min: number; max: number } = { min: 10, max: 40 };
+        const resetHumidity: { min: number; max: number } = { min: 0, max: 90 };
+        const resetAirQuality: { min: number; max: number } = { min: 0, max: 200 };
         setTemperatureRange(resetTemperature);
         setHumidityRange(resetHumidity);
         setAirQualityRange(resetAirQuality);

@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
-import './rowData.css';
-import Metric from './metric';
+import Metric from './Metric';
 import { DashboardContext } from '../context/DashboardContext';
+import Pin from './svg_components/Pin'
 
 interface SensorMetric {
   sensorId: string;
@@ -24,23 +24,23 @@ const RowData: React.FC<rowDataProps> = ({ metric }) => {
   };
 
 
-  const minTemperature = 10;
-  const maxTemperature = 40;
+  const minTemperature: number = 10;
+  const maxTemperature: number = 40;
 
-  const currentTemperature = metric.temperature;
-  const temperaturePercentage = ((currentTemperature - minTemperature) / (maxTemperature - minTemperature)) * 100;
+  const currentTemperature: number = metric.temperature;
+  const temperaturePercentage: number = ((currentTemperature - minTemperature) / (maxTemperature - minTemperature)) * 100;
 
-  const minAirQuality = 0;
-  const maxAirQuality = 200;
+  const minAirQuality: number = 0;
+  const maxAirQuality: number = 200;
 
-  const currentAirQuality = metric.airQuality;
-  const airQualityPercentage = ((currentAirQuality - minAirQuality) / (maxAirQuality - minAirQuality)) * 100;
+  const currentAirQuality: number = metric.airQuality;
+  const airQualityPercentage: number = ((currentAirQuality - minAirQuality) / (maxAirQuality - minAirQuality)) * 100;
 
-  const minHumidity = 0;
-  const maxHumidity = 90;
+  const minHumidity: number = 0;
+  const maxHumidity: number = 90;
 
-  const currentHumidity = metric.humidity;
-  const humidityPercentage = ((currentHumidity - minHumidity) / (maxHumidity - minHumidity)) * 100;
+  const currentHumidity: number = metric.humidity;
+  const humidityPercentage: number = ((currentHumidity - minHumidity) / (maxHumidity - minHumidity)) * 100;
 
   const metricValues: [{
     temperature: number;
@@ -66,27 +66,25 @@ const RowData: React.FC<rowDataProps> = ({ metric }) => {
 
   return (
     <li key={metric.sensorId} onClick={handleToggleExpand} className="row-data-container">
-      <button className="pinned-button" onClick={(e) =>{e.stopPropagation(); pinnedDataFunction(metric.sensorId)}}>pin</button>
-      <div className="sensor-metric-container">
-        <div className="sensor-id-container">
-          <span className="sensor-id">{metric.sensorId}</span>
+      <div className="sensor-id-container">
+        <span className="sensor-id">{metric.sensorId}</span>
+      </div>
+      <div className="metric-container">
+        <Metric metric={"temperature"} values={metricValues} />
+        <Metric metric={"airQuality"} values={metricValues} />
+        <Metric metric={"humidity"} values={metricValues} />
+      </div>
+      <div className="pin-and-timestamp-container">
+        <div className="pinned-button">
+          <button onClick={(e) => { e.stopPropagation(); pinnedDataFunction(metric.sensorId) }}>
+            <Pin />
+          </button>
         </div>
-        <div className="metric-container">
-          <Metric metric={"temperature"} values={metricValues} />
-          <Metric metric={"airQuality"} values={metricValues} />
-          <Metric metric={"humidity"} values={metricValues} />
+        <div className="timestamp">
+          {new Date(metric.timestamp).toLocaleString()}
         </div>
       </div>
 
-
-      {isExpanded && (
-        <div className="expanded-container">
-          <p>Temperature: {metric.temperature.toFixed(2)}°C</p>
-          <p>Humidity: {metric.humidity.toFixed(2)}%</p>
-          <p>Air Quality: {metric.airQuality.toFixed(2)}</p>
-          <p>Timestamp: {new Date(metric.timestamp).toLocaleString()}</p>
-        </div>
-      )}
     </li>
   );
 };

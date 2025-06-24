@@ -9,7 +9,7 @@ interface sliderProps {
 
 const Sliders: React.FC<sliderProps> = ({ onSlide, metric, range }) => {
     return (
-        <div className="filter-input-group">
+        <div>
             <label className="filter-label">{`${metric}`} Range</label>
             <div className="range-inputs-container">
                 <input

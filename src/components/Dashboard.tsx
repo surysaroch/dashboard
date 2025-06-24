@@ -1,11 +1,10 @@
-import React, { useEffect, useMemo, useState, useRef, useContext } from 'react';
+import React, { useMemo, useState, useContext } from 'react';
 
-import RowData from "./rowData";
-import Sorting from "./sorting";
+import RowData from "./RowData";
+import Sorting from "./Sorting";
 import Filtering from "./Filtering";
-import Pagination from './pagination';
-import "./dashboard.css"
-import Pins from './pins';
+import Pagination from './Pagination';
+import Pins from './Pins';
 import { DashboardContext } from '../context/DashboardContext';
 
 interface SensorMetric {
@@ -23,10 +22,10 @@ interface FilterItem {
 const MAX_PAGE_SIZE = 5;
 
 const Dashboard: React.FC = () => {
-  const { sensorData } = useContext(DashboardContext);
+  const { sensorData, latestSensorData } = useContext(DashboardContext);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageData, setPageData] = useState<SensorMetric[]>([]);
-  const [sortedData, setSortedData] = useState({ metric: "sensorId", direction: "asc" });
+  const [sortedData, setSortedData] = useState({ metric: "sensorId", direction: "ascending" });
   const [filteredData, setFilteredData] = useState({
     temperature: { min: 0, max: 40 },
     humidity: { min: 0, max: 90 },
@@ -36,25 +35,31 @@ const Dashboard: React.FC = () => {
 
 
   const processData = useMemo(() => {
-    let items = [...sensorData]
+    let items = []
+    if (sortedData.metric === "timestamp" && sortedData.direction === "descending"){
+      items = Object.values(latestSensorData).map(sensorHistory => sensorHistory[sensorHistory.length - 1]);
+    }
+    else{
+      items = [...sensorData];
+    }
     items = items.filter(item => {
-      const filteredTemp = (item.temperature >= filteredData.temperature.min) && (item.temperature <= filteredData.temperature.max);
-      const filteredAir = (item.airQuality >= filteredData.airQuality.min) && (item.airQuality <= filteredData.airQuality.max);
-      const filteredHumidity = (item.humidity >= filteredData.humidity.min) && (item.humidity <= filteredData.humidity.max);
-      const filteredSensorId = chosenSensorId === '' || item.sensorId.toLowerCase().includes(chosenSensorId.toLowerCase());
+      const filteredTemp: boolean = (item.temperature >= filteredData.temperature.min) && (item.temperature <= filteredData.temperature.max);
+      const filteredAir: boolean = (item.airQuality >= filteredData.airQuality.min) && (item.airQuality <= filteredData.airQuality.max);
+      const filteredHumidity: boolean = (item.humidity >= filteredData.humidity.min) && (item.humidity <= filteredData.humidity.max);
+      const filteredSensorId: boolean = chosenSensorId === '' || item.sensorId.toLowerCase().includes(chosenSensorId.toLowerCase());
       return filteredTemp && filteredAir && filteredHumidity && filteredSensorId;
     })
 
     if (sortedData.metric === "sensorId") {
-      // console.log("jhonson")
-      return sortedData.direction === "asc" ? items : items.reverse()
+      return sortedData.direction === "ascending" ? items : items.reverse()
     }
+
     else {
       items.sort((a, b) => {
         const valA = a[sortedData.metric as keyof SensorMetric];
         const valB = b[sortedData.metric as keyof SensorMetric];
         if (typeof valA === "number" && typeof valB === "number") {
-          return sortedData.direction === 'asc' ? valA - valB : valB - valA;
+          return sortedData.direction === "ascending" ? valA - valB : valB - valA;
         }
         else { return 0 }
       });
@@ -65,9 +70,9 @@ const Dashboard: React.FC = () => {
 
 
   const sliceData = () => {
-    const last_page = Math.ceil(processData.length / MAX_PAGE_SIZE);
-    const startIndex = (currentPage - 1) * MAX_PAGE_SIZE;
-    const endIndex = startIndex + MAX_PAGE_SIZE;
+    const last_page: number = Math.ceil(processData.length / MAX_PAGE_SIZE);
+    const startIndex: number  = (currentPage - 1) * MAX_PAGE_SIZE;
+    const endIndex: number  = startIndex + MAX_PAGE_SIZE;
     if (currentPage > last_page) {
       setCurrentPage(last_page === 0 ? last_page + 1 : last_page);
     };
@@ -108,7 +113,7 @@ const Dashboard: React.FC = () => {
   return (
     <div className="dashboard-container">
       <div className="heading-container">
-        <h1>Live Sensor Data</h1>
+        <h1>LIVE SENSOR DATA</h1>
         <div className="features-container">
           
           <div><Pins /></div>

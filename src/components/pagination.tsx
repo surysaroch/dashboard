@@ -24,10 +24,10 @@ const Pagination: React.FC<paginationType> = ({ onChange, currentPage, processDa
 
 
   const applyPageChange = () => {
-    const maxPage = Math.ceil(processDataLength / maxPageSize);
-    const inputPage = Number((inputRef.current) && inputRef.current.value);
+    const maxPage: number = Math.ceil(processDataLength / maxPageSize);
+    const inputPage: number = Number((inputRef.current) && inputRef.current.value);
 
-    if (!inputPage || isNaN(Number(inputPage))) {
+    if (!inputPage) {
       if (inputRef.current) inputRef.current.value = "1";
       onChange(1);
       return;
