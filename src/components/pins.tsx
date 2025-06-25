@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useMemo } from "react"
 import { useContext, useState } from 'react';
 import { DashboardContext } from '../context/DashboardContext';
 import Metric from './Metric';
@@ -30,64 +30,68 @@ const Pins = () => {
                 <div className="pinned-items-panel">
                     {
                         // Show message if no pins, otherwise render each pinned sensor
-                        pinnedData.size === 0? (<div className="no-pins-message">You Have No Pins</div>):
-                        [...pinnedData].map(sensorId => {
-                            const sensor = sensorData.find(s => s.sensorId === sensorId);
-                            if (!sensor) return null;
+                        pinnedData.size === 0 ? (<div className="no-pins-message">You Have No Pins</div>) :
+                            [...pinnedData].map(sensorId => {
+                                const sensor = sensorData.find(s => s.sensorId === sensorId);
+                                if (!sensor) return null;
 
-                            const minTemperature = 10, maxTemperature = 40;
-                            const minAirQuality = 0, maxAirQuality = 200;
-                            const minHumidity = 0, maxHumidity = 90;
+                                const minTemperature = 10, maxTemperature = 40;
+                                const minAirQuality = 0, maxAirQuality = 200;
+                                const minHumidity = 0, maxHumidity = 90;
 
-                            const metricValues: MetricValues = [
-                                {
-                                    temperature: sensor.temperature,
-                                    temperaturePercentage: ((sensor.temperature - minTemperature) / (maxTemperature - minTemperature)) * 100
-                                },
-                                {
-                                    airQuality: sensor.airQuality,
-                                    airQualityPercentage: ((sensor.airQuality - minAirQuality) / (maxAirQuality - minAirQuality)) * 100
-                                },
-                                {
-                                    humidity: sensor.humidity,
-                                    humidityPercentage: ((sensor.humidity - minHumidity) / (maxHumidity - minHumidity)) * 100
-                                }
-                            ];
+                                const metricValues: MetricValues = [
+                                    {
+                                        temperature: sensor.temperature,
+                                        temperaturePercentage: ((sensor.temperature - minTemperature) / (maxTemperature - minTemperature)) * 100
+                                    },
+                                    {
+                                        airQuality: sensor.airQuality,
+                                        airQualityPercentage: ((sensor.airQuality - minAirQuality) / (maxAirQuality - minAirQuality)) * 100
+                                    },
+                                    {
+                                        humidity: sensor.humidity,
+                                        humidityPercentage: ((sensor.humidity - minHumidity) / (maxHumidity - minHumidity)) * 100
+                                    }
+                                ];
 
-                            return (
-                                <div key={sensorId} className="pinned-item-content-wrapper">
-                                    <div>
-                                        <button className="unpin-button" onClick={() => (pinnedDataFunction(sensor.sensorId))}>
-                                            <Unpin />
-                                        </button>
-                                        <div className="sensor-metric-container">
-                                            <div className="sensor-id-container">
-                                                <span className="sensor-id">{sensor.sensorId}</span>
+                                // Render pinned sensor details, metrics, and unpin button
+                                return (
+                                    <div key={sensorId} className="pinned-item-content-wrapper">
+                                        <div>
+                                            <div className="pinned-sensor-id-container">
+                                                <span className="pinned-sensor-id">{sensor.sensorId}</span>
                                             </div>
-                                            <div className="metric-container">
+                                            <div className="pinned-metric-container">
                                                 <Metric metric={"temperature"} values={metricValues} />
                                                 <Metric metric={"airQuality"} values={metricValues} />
                                                 <Metric metric={"humidity"} values={metricValues} />
                                             </div>
+                                            <div className="pin-and-timestamp-container">
+                                                <div className="pinned-button">
+                                                    <button className="unpin-button" onClick={() => (pinnedDataFunction(sensor.sensorId))}>
+                                                        <Unpin />
+                                                    </button>
+                                                </div>
+                                                <div className="timestamp">
+                                                    {new Date(sensor.timestamp).toLocaleString()}
+                                                </div>
+                                            </div>
+
+                                            <div className="expanded-container">
+                                                <p>Temperature: {sensor.temperature.toFixed(2)}°C</p>
+                                                <p>Humidity: {sensor.humidity.toFixed(2)}%</p>
+                                                <p>Air Quality: {sensor.airQuality.toFixed(2)}</p>
+                                                <p>Timestamp: {new Date(sensor.timestamp).toLocaleString()}</p>
+                                            </div>
+
+
                                         </div>
-
-
-
-                                        <div className="expanded-container">
-                                            <p>Temperature: {sensor.temperature.toFixed(2)}°C</p>
-                                            <p>Humidity: {sensor.humidity.toFixed(2)}%</p>
-                                            <p>Air Quality: {sensor.airQuality.toFixed(2)}</p>
-                                            <p>Timestamp: {new Date(sensor.timestamp).toLocaleString()}</p>
-                                        </div>
-
 
                                     </div>
-
-                                </div>
-                            );
+                                );
 
 
-                        })}
+                            })}
                 </div>
             )}
         </div>

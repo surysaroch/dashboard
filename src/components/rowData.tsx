@@ -1,4 +1,4 @@
-import React, { useState, useContext, useMemo } from 'react';
+import React, { useContext, useMemo } from 'react';
 import Metric from './Metric';
 import { DashboardContext } from '../context/DashboardContext';
 import Pin from './svg_components/Pin'
@@ -15,14 +15,11 @@ interface rowDataProps {
   metric: SensorMetric;
 }
 
+// RowData component: displays a single sensor's data row with metrics and pin/timestamp
 const RowData: React.FC<rowDataProps> = ({ metric }) => {
   const { pinnedDataFunction } = useContext(DashboardContext);
-  const [isExpanded, setIsExpanded] = useState<boolean>(false);
 
-  const handleToggleExpand = () => {
-    setIsExpanded(!isExpanded);
-  };
-
+  // Memoize metric values and their percentages for display in Metric components
   const metricValues = useMemo(() => {
     const minTemperature: number = 10;
     const maxTemperature: number = 40;
@@ -56,8 +53,9 @@ const RowData: React.FC<rowDataProps> = ({ metric }) => {
         { humidity: number; humidityPercentage: number }]
   }, [metric.temperature, metric.airQuality, metric.humidity]);
 
+  // Render the sensor row: sensor id, metrics, pin button, and timestamp in three different containers as items for flexbox
   return (
-    <li key={metric.sensorId} onClick={handleToggleExpand} className="row-data-container">
+    <li key={metric.sensorId} className="row-data-container">
       <div className="sensor-id-container">
         <span className="sensor-id">{metric.sensorId}</span>
       </div>

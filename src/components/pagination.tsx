@@ -11,7 +11,7 @@ interface paginationType {
 // Pagination component: handles page navigation and direct page input
 const Pagination: React.FC<paginationType> = ({ onChange, currentPage, processDataLength, maxPageSize }) => {
   const inputRef = useRef<HTMLInputElement>(null);
-  
+
   // Keep the input field in sync with the current page
   useEffect(() => {
     if (inputRef.current) inputRef.current.value = currentPage.toString();
@@ -29,6 +29,7 @@ const Pagination: React.FC<paginationType> = ({ onChange, currentPage, processDa
 
   // Validate and apply page change from input field
   const applyPageChange = () => {
+    const last_page: number = Math.ceil(processDataLength / maxPageSize);
     const maxPage: number = Math.ceil(processDataLength / maxPageSize);
     const inputPage: number = Number((inputRef.current) && inputRef.current.value);
 
@@ -38,13 +39,18 @@ const Pagination: React.FC<paginationType> = ({ onChange, currentPage, processDa
       onChange(1);
       return;
     }
+    if (currentPage > last_page) {
+      onChange(last_page === 0 ? last_page + 1 : last_page);
+    };
     if (inputPage > maxPage) {
       if (inputRef.current) inputRef.current.value = maxPage.toString();
       onChange(maxPage);
-    } else if (inputPage < 1) {
+    }
+    else if (inputPage < 1) {
       if (inputRef.current) inputRef.current.value = "1";
       onChange(1);
-    } else {
+    }
+    else {
       onChange(inputPage);
     }
   };

@@ -8,10 +8,12 @@ interface sliderProps {
     };
 }
 
+// Sliders component: renders min and max range sliders for a given metric
 const Sliders: React.FC<sliderProps> = ({ onSlide, metric, range }) => {
     return (
         <div>
             <label className="filter-label">{`${metric}`} Range</label>
+            {/* Min value slider */}
             <div className="range-inputs-container">
                 <input
                     className="filter-range-input"
@@ -26,6 +28,7 @@ const Sliders: React.FC<sliderProps> = ({ onSlide, metric, range }) => {
                     Min: {metric === "Temperature" ? range.min + "°C" : metric === "Humidity" ? range.min + "%" : range.min}
                 </span>
             </div>
+            {/* Max value slider */}
             <div className="range-inputs-container">
                 <input
                     className="filter-range-input"

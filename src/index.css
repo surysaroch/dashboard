@@ -542,7 +542,7 @@ body {
     padding: 1rem;
     margin-top: 0.5rem;   
     position: absolute;   
-    min-width: 500px;    
+    min-width: 600px;    
     max-height: 400px;    
     overflow-y: auto;     
     display: flex;        
@@ -567,19 +567,16 @@ body {
     padding:0.5rem;
 }
 
-.pinned-items-panel .sensor-id-container {
+.pinned-sensor-id-container {
      width: 4rem; 
      height: 4rem; 
 }
-.pinned-items-panel .sensor-id {
+.pinnned-sensor-id {
      font-size: 0.8em; 
 }
 
-.pinned-items-panel .expanded-container {
+.expanded-container {
     font-size: 0.85em;
     color: #fff; 
     border-top: 1px solid #6366f1;
-}
-.pinned-items-panel .expanded-container p{
-    color: #a0aec0;
 }
