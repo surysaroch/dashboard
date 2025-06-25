@@ -4,6 +4,9 @@ import { DashboardContext } from '../context/DashboardContext';
 import Metric from './Metric';
 import Unpin from './svg_components/Unpix';
 import Pin from './svg_components/Pin';
+import Temperature from './svg_components/Temperature';
+import Humidity from "./svg_components/Humidity";
+import AirQuality from "./svg_components/AirQuality";
 
 type MetricValues = [{
     temperature: number;
@@ -18,14 +21,16 @@ type MetricValues = [{
 
 // Pins component: displays and manages the user's pinned sensors
 const Pins = () => {
-    const { pinnedData, sensorData, pinnedDataFunction } = useContext(DashboardContext);
+    const { pinnedData, sensorData, pinnedDataFunction, latestSensorData } = useContext(DashboardContext);
     const [isExpanded, setIsExpanded] = useState(false);
-
+    
     // Render pins toggle button and the list of pinned sensors if expanded
     return (
         <div className="pins-main-container">
             <button className="pins-toggle-button" onClick={() => setIsExpanded(!isExpanded)}>
-                <Pin />Pins ({pinnedData.size})</button> {/*svg*/}
+                <Pin />{/*svg*/}
+                <p>Pins ({pinnedData.size})</p>
+                </button> 
             {isExpanded && (
                 <div className="pinned-items-panel">
                     {
@@ -34,7 +39,6 @@ const Pins = () => {
                             [...pinnedData].map(sensorId => {
                                 const sensor = sensorData.find(s => s.sensorId === sensorId);
                                 if (!sensor) return null;
-
                                 const minTemperature = 10, maxTemperature = 40;
                                 const minAirQuality = 0, maxAirQuality = 200;
                                 const minHumidity = 0, maxHumidity = 90;
@@ -57,7 +61,7 @@ const Pins = () => {
                                 // Render pinned sensor details, metrics, and unpin button
                                 return (
                                     <div key={sensorId} className="pinned-item-content-wrapper">
-                                        <div>
+                                        <div className="pinned-sensor-card">
                                             <div className="pinned-sensor-id-container">
                                                 <span className="pinned-sensor-id">{sensor.sensorId}</span>
                                             </div>
@@ -66,26 +70,31 @@ const Pins = () => {
                                                 <Metric metric={"airQuality"} values={metricValues} />
                                                 <Metric metric={"humidity"} values={metricValues} />
                                             </div>
+
                                             <div className="pin-and-timestamp-container">
                                                 <div className="pinned-button">
                                                     <button className="unpin-button" onClick={() => (pinnedDataFunction(sensor.sensorId))}>
                                                         <Unpin />
                                                     </button>
                                                 </div>
-                                                <div className="timestamp">
+                                                <div className="pinned-timestamp">
                                                     {new Date(sensor.timestamp).toLocaleString()}
                                                 </div>
                                             </div>
-
-                                            <div className="expanded-container">
-                                                <p>Temperature: {sensor.temperature.toFixed(2)}°C</p>
-                                                <p>Humidity: {sensor.humidity.toFixed(2)}%</p>
-                                                <p>Air Quality: {sensor.airQuality.toFixed(2)}</p>
-                                                <p>Timestamp: {new Date(sensor.timestamp).toLocaleString()}</p>
-                                            </div>
-
-
                                         </div>
+                                        
+                                        <div className="expanded-container">
+                                            {latestSensorData[sensorId].slice(1, 5).map((entry, idx) => (
+                                                <div key={idx} className="sensor-history-entry">
+                                                    <p><Temperature color="#FF7101" /> {entry.temperature.toFixed(2)}°C</p>
+                                                    <p><AirQuality color="#00A3FF" /> {entry.airQuality.toFixed(2)}</p>
+                                                    <p><Humidity color="#00FF00" /> {entry.humidity.toFixed(2)}%</p>
+                                                    <p>{new Date(entry.timestamp).toLocaleTimeString()}</p>
+                                                </div>
+                                            ))}
+                                        </div>
+
+
 
                                     </div>
                                 );

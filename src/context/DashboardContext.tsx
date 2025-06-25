@@ -2,6 +2,7 @@ import { createContext, useState, useEffect, type ReactNode } from 'react';
 import SimulateRealTimeData from "../util/SimulateRealTimeData";
 
 const MAX_HISTORY_PER_SENSOR = 10;
+const MAX_PINS = 5;
 
 interface SensorMetric {
     sensorId: string;
@@ -15,14 +16,14 @@ interface DashboardContextType {
     sensorData: SensorMetric[];
     pinnedData: Set<string>;
     pinnedDataFunction: (sensorId: string) => void;
-    latestSensorData: Record<string,SensorMetric[]>;
+    latestSensorData: Record<string, SensorMetric[]>;
 }
 
 // Create the Dashboard context with default values
 export const DashboardContext = createContext<DashboardContextType>({
     sensorData: [],
     pinnedData: new Set<string>(),
-    pinnedDataFunction: () => {},
+    pinnedDataFunction: () => { },
     latestSensorData: {}
 });
 
@@ -54,7 +55,7 @@ export default function DashboardContextProvider({ children }: DashboardContextP
                 return updated;
             });
         });
-    
+
         return () => {
             stopSimulation();
         };
@@ -63,16 +64,20 @@ export default function DashboardContextProvider({ children }: DashboardContextP
     // Add or remove a sensor from the pinned set
     const pinnedDataFunction = (sensorId: string) => {
         setPinnedData(prev => {
+            console.log(prev)
             const newSet = new Set(prev);
             if (newSet.has(sensorId)) {
-                newSet.delete(sensorId); 
-            } else {
+                newSet.delete(sensorId);
+            }
+            else {
+                if (newSet.size >= MAX_PINS) {
+                    return prev;
+                }
                 newSet.add(sensorId);
             }
             return newSet;
         });
     };
-
     // Context value to be provided to consumers
     const value = {
         sensorData,

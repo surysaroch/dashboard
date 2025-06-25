@@ -79,4 +79,4 @@ const RowData: React.FC<rowDataProps> = ({ metric }) => {
   );
 };
 
-export default  RowData;
+export default RowData;
