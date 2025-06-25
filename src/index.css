@@ -568,13 +568,33 @@ body {
 }
 
 .pinned-sensor-id-container {
-     width: 4rem; 
-     height: 4rem; 
-}
-.pinnned-sensor-id {
-     font-size: 0.8em; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: #6366f1;
+    border-radius: 50%;
+    width: 3.5rem;
+    height: 3.5rem;
+    box-sizing: border-box;
+    flex-shrink: 0;
 }
 
+.pinned-sensor-id {
+    font-weight: bold;
+    font-size: 0.7em;
+    color: #D3D3D3;
+}
+
+.pinned-metric-container{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    flex-grow: 1;
+    min-width: 0;
+    width: 100%;
+}
 .expanded-container {
     font-size: 0.85em;
     color: #fff; 

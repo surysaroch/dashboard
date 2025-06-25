@@ -71,8 +71,12 @@ const Dashboard: React.FC = () => {
 
   //Slice the data to 5 sensors per page
   const sliceData = useMemo(() => {
+    const last_page: number = Math.ceil(processData.length / MAX_PAGE_SIZE);
     const startIndex: number  = (currentPage - 1) * MAX_PAGE_SIZE;
     const endIndex: number  = startIndex + MAX_PAGE_SIZE;
+    if (currentPage > last_page) {
+      setCurrentPage(last_page === 0 ? last_page + 1 : last_page);
+    };
     setPageData(processData.slice(startIndex, endIndex));
   }, [currentPage, processData]);
 
