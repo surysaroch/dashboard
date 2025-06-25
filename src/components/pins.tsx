@@ -15,17 +15,21 @@ type MetricValues = [{
     humidity: number;
     humidityPercentage: number;
 }];
+
+// Pins component: displays and manages the user's pinned sensors
 const Pins = () => {
     const { pinnedData, sensorData, pinnedDataFunction } = useContext(DashboardContext);
     const [isExpanded, setIsExpanded] = useState(false);
 
+    // Render pins toggle button and the list of pinned sensors if expanded
     return (
         <div className="pins-main-container">
             <button className="pins-toggle-button" onClick={() => setIsExpanded(!isExpanded)}>
-                <Pin />Pins ({pinnedData.size})</button>
+                <Pin />Pins ({pinnedData.size})</button> {/*svg*/}
             {isExpanded && (
                 <div className="pinned-items-panel">
                     {
+                        // Show message if no pins, otherwise render each pinned sensor
                         pinnedData.size === 0? (<div className="no-pins-message">You Have No Pins</div>):
                         [...pinnedData].map(sensorId => {
                             const sensor = sensorData.find(s => s.sensorId === sensorId);

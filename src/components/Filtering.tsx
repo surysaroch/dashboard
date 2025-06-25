@@ -15,6 +15,7 @@ interface FilteringProps {
     onSensorFilter: (sensorId: string) => void;
 }
 
+// Filtering component: handles filter UI and logic for sensor metrics and sensorId
 const Filtering: React.FC<FilteringProps> = ({ onFilter, onSensorFilter }) => {
     const [isExpanded, setIsExpanded] = useState(false)
     const [temperatureRange, setTemperatureRange] = useState({ min: 10, max: 40 })
@@ -22,6 +23,7 @@ const Filtering: React.FC<FilteringProps> = ({ onFilter, onSensorFilter }) => {
     const [humidityRange, setHumidityRange] = useState({ min: 0, max: 90 })
     const [sensorId, setSensorId] = useState("")
 
+    // Handles slider changes for each metric and updates their state
     const handleFiltering = useCallback((metric: string, value: number, isMin: boolean) => {
         switch (metric) {
             case "Temperature":
@@ -44,6 +46,7 @@ const Filtering: React.FC<FilteringProps> = ({ onFilter, onSensorFilter }) => {
         }
     },[]);
 
+    // Sends the current filter values to the parent Dashboard component
     const updateFilterValues = () => {
         onFilter([
             {
@@ -62,6 +65,7 @@ const Filtering: React.FC<FilteringProps> = ({ onFilter, onSensorFilter }) => {
         ])
     }
 
+    // Resets all filters and notifies parent to clear filters and sensor search
     const clearAll = () => {
         const resetTemperature: { min: number; max: number } = { min: 10, max: 40 };
         const resetHumidity: { min: number; max: number } = { min: 0, max: 90 };
@@ -78,10 +82,12 @@ const Filtering: React.FC<FilteringProps> = ({ onFilter, onSensorFilter }) => {
         onSensorFilter(""); 
     };
     
+    // Sends the searched sensorId to the parent Dashboard component
     const handleSearching = useCallback((searchedSensorId: string) => {
         onSensorFilter(searchedSensorId);
     },[]);
 
+     // Renders the filter UI: toggles, sliders, text input, and action buttons
     return (
         <>
             <div className="filter-wrapper-main">

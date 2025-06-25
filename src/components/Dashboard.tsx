@@ -21,6 +21,7 @@ interface FilterItem {
 }
 const MAX_PAGE_SIZE = 5;
 
+// Main dashboard component, parent of all other components
 const Dashboard: React.FC = () => {
   const { sensorData, latestSensorData } = useContext(DashboardContext);
   const [currentPage, setCurrentPage] = useState(1);
@@ -33,10 +34,11 @@ const Dashboard: React.FC = () => {
   });
   const [chosenSensorId, setChosenSensorId] = useState('')
 
+    // Memoized function to process data: applies filters and sorting
   const processData = useMemo(() => {
     let items = []
     if (sortedData.metric === "timestamp" && sortedData.direction === "descending"){
-      items = Object.values(latestSensorData).map(sensorHistory => sensorHistory[sensorHistory.length - 1]);
+      items = Object.values(latestSensorData).map(sensorHistory => sensorHistory[sensorHistory.length - 1]); //get the oldest sensors
     }
     else{
       items = [...sensorData];
@@ -50,10 +52,10 @@ const Dashboard: React.FC = () => {
     })
 
     if (sortedData.metric === "sensorId") {
-      return sortedData.direction === "ascending" ? items : items.reverse()
+      return sortedData.direction === "ascending" ? items : items.reverse() //sort by: sensorId
     }
 
-    else {
+    else {//Sort all the metrics using compare function
       items.sort((a, b) => {
         const valA = a[sortedData.metric as keyof SensorMetric];
         const valB = b[sortedData.metric as keyof SensorMetric];
@@ -67,31 +69,23 @@ const Dashboard: React.FC = () => {
   }, [sortedData, sensorData, filteredData, chosenSensorId]);
 
 
-
-  const sliceData = () => {
-    const last_page: number = Math.ceil(processData.length / MAX_PAGE_SIZE);
+  //Slice the data to 5 sensors per page
+  const sliceData = useMemo(() => {
     const startIndex: number  = (currentPage - 1) * MAX_PAGE_SIZE;
     const endIndex: number  = startIndex + MAX_PAGE_SIZE;
-    if (currentPage > last_page) {
-      setCurrentPage(last_page === 0 ? last_page + 1 : last_page);
-    };
     setPageData(processData.slice(startIndex, endIndex));
-
-  };
-
-  useMemo(() => {
-    sliceData();
   }, [currentPage, processData]);
 
-
+  // Handles sorting changes from Sorting component
   const handleSort = useCallback((chosenMetric: string, direction: string) => {
     setSortedData({ metric: chosenMetric, direction: direction });
   },[]);
 
+  // Handles filter changes from Filtering component
   const handleFilterChange = useCallback((filters: FilterItem[]) => {
     setFilteredData(prev => {
       return {
-        ...prev,
+        ...prev, // This spreads the previous state and updates the range for each metric (temperature, humidity, airQuality)
         [filters[0].metric]: filters[0].range,
         [filters[1].metric]: filters[1].range,
         [filters[2].metric]: filters[2].range
@@ -100,16 +94,18 @@ const Dashboard: React.FC = () => {
     setCurrentPage(1)
   }, []);
 
+  // Handles sensorId search from Filtering component
   const handleSensorIdFilter = useCallback((sensorId: string) => {
     setChosenSensorId(sensorId);
 
   },[]);
 
+  // Handles pagination changes from Pagination component
   const handlePagination = useCallback((page: number) => {
     setCurrentPage(page);
   },[]);
 
-
+  // Render dashboard UI: features, data rows, and pagination
   return (
     <div className="dashboard-container">
       <div className="heading-container">

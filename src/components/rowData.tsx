@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useMemo } from 'react';
 import Metric from './Metric';
 import { DashboardContext } from '../context/DashboardContext';
 import Pin from './svg_components/Pin'
@@ -23,46 +23,38 @@ const RowData: React.FC<rowDataProps> = ({ metric }) => {
     setIsExpanded(!isExpanded);
   };
 
+  const metricValues = useMemo(() => {
+    const minTemperature: number = 10;
+    const maxTemperature: number = 40;
+    const currentTemperature: number = metric.temperature;
+    const temperaturePercentage: number = ((currentTemperature - minTemperature) / (maxTemperature - minTemperature)) * 100;
 
-  const minTemperature: number = 10;
-  const maxTemperature: number = 40;
+    const minAirQuality: number = 0;
+    const maxAirQuality: number = 200;
+    const currentAirQuality: number = metric.airQuality;
+    const airQualityPercentage: number = ((currentAirQuality - minAirQuality) / (maxAirQuality - minAirQuality)) * 100;
 
-  const currentTemperature: number = metric.temperature;
-  const temperaturePercentage: number = ((currentTemperature - minTemperature) / (maxTemperature - minTemperature)) * 100;
+    const minHumidity: number = 0;
+    const maxHumidity: number = 90;
+    const currentHumidity: number = metric.humidity;
+    const humidityPercentage: number = ((currentHumidity - minHumidity) / (maxHumidity - minHumidity)) * 100;
 
-  const minAirQuality: number = 0;
-  const maxAirQuality: number = 200;
-
-  const currentAirQuality: number = metric.airQuality;
-  const airQualityPercentage: number = ((currentAirQuality - minAirQuality) / (maxAirQuality - minAirQuality)) * 100;
-
-  const minHumidity: number = 0;
-  const maxHumidity: number = 90;
-
-  const currentHumidity: number = metric.humidity;
-  const humidityPercentage: number = ((currentHumidity - minHumidity) / (maxHumidity - minHumidity)) * 100;
-
-  const metricValues: [{
-    temperature: number;
-    temperaturePercentage: number;
-  }, {
-    airQuality: number;
-    airQualityPercentage: number;
-  }, {
-    humidity: number;
-    humidityPercentage: number;
-  }] = [{
-    temperature: currentTemperature,
-    temperaturePercentage: temperaturePercentage
-  },
-  {
-    airQuality: currentAirQuality,
-    airQualityPercentage: airQualityPercentage
-  },
-  {
-    humidity: currentHumidity,
-    humidityPercentage: humidityPercentage
-  }];
+    return [{
+      temperature: currentTemperature,
+      temperaturePercentage: temperaturePercentage
+    },
+    {
+      airQuality: currentAirQuality,
+      airQualityPercentage: airQualityPercentage
+    },
+    {
+      humidity: currentHumidity,
+      humidityPercentage: humidityPercentage
+    }] as [
+        { temperature: number; temperaturePercentage: number },
+        { airQuality: number; airQualityPercentage: number },
+        { humidity: number; humidityPercentage: number }]
+  }, [metric.temperature, metric.airQuality, metric.humidity]);
 
   return (
     <li key={metric.sensorId} onClick={handleToggleExpand} className="row-data-container">
@@ -89,4 +81,4 @@ const RowData: React.FC<rowDataProps> = ({ metric }) => {
   );
 };
 
-export default RowData;
+export default  RowData;
