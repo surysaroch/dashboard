@@ -23,11 +23,8 @@ interface metricType {
 
 // Metric component: displays a single metric (temperature, air quality, or humidity) with icon and progress bar
 const Metric: React.FC<metricType> = ({ metric, values }) => {
-    console.log(`Metric ${metric} rendering with values:`, values);
-
     // Select the appropriate icon, label, value, and progress based on the metric type provided by the parent.
     const { icon, name, value, percentage, progressWidth } = useMemo(() => {
-        console.log(`Metric ${metric} useMemo running`);
         const iconMap = {
             temperature: <Temperature color="#FF7101" />,
             humidity: <Humidity color="#00FF00" />,

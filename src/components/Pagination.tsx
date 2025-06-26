@@ -74,7 +74,7 @@ const Pagination: React.FC<paginationType> = ({ onChange, currentPage, processDa
         onKeyDown={handleEnterPress}
         onBlur={handleBlur}
         ref={inputRef}
-      />
+      /><p>/{Math.ceil(processDataLength / maxPageSize)}</p>
       <button onClick={handleNextPage} disabled={currentPage === Math.ceil(processDataLength / maxPageSize)}>Next</button>
     </>
 

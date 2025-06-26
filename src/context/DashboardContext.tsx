@@ -70,6 +70,7 @@ export default function DashboardContextProvider({ children }: DashboardContextP
             }
             else {
                 if (newSet.size >= MAX_PINS) {
+                    alert("Maximum of 5 pins reached. Please unpin a sensor before adding a new one.");
                     return prev;
                 }
                 newSet.add(sensorId);
