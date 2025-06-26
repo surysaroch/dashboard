@@ -1,8 +1,6 @@
 import React from "react"
 import { useContext, useState } from 'react';
 import { DashboardContext } from '../context/DashboardContext';
-import Metric from './Metric';
-import Unpin from './svg_components/Unpix';
 import Pin from './svg_components/Pin';
 import Temperature from './svg_components/Temperature';
 import Humidity from "./svg_components/Humidity";

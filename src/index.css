@@ -141,6 +141,7 @@ input[type=number] {
     position: absolute;
     flex-direction: column;
     gap: 1.25rem;
+    width: 13rem;
 }
 
 
@@ -250,6 +251,7 @@ input[type="range"].filter-range-input {
 
 
 /*-------------Sorting CSS---------------*/
+
 .sorting-container {
     display: flex;
     align-items: center;
@@ -266,6 +268,9 @@ input[type="range"].filter-range-input {
 
 
 .dropdown-container select {
+    -webkit-appearance: none; 
+    -moz-appearance: none;  
+    appearance: none;  
     font-size: 0.9rem;
     font-weight: bold;
     color: #D3D3D3;
@@ -274,10 +279,8 @@ input[type="range"].filter-range-input {
     border: 1px solid #333;
     border-radius: 0.3rem;
     cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     height: 2.5rem;
+    text-align: center;
 }
 
 
@@ -320,10 +323,6 @@ input[type="range"].filter-range-input {
 
 
 /*-------------RowData CSS---------------*/
-body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-}
-
 .row-data-container {
     margin-bottom: 0.8rem;
     border: 0.09rem solid #6366f1;
@@ -606,50 +605,6 @@ body {
     border: none;
 }
 
-.pinned-sensor-id-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    background-color: #6366f1;
-    border-radius: 50%;
-    width: 4rem;
-    height: 4rem;
-    box-sizing: border-box;
-    flex-shrink: 0;
-}
-
-.pinned-sensor-id {
-    font-weight: bold;
-    font-size: 0.8em;
-    color: #D3D3D3;
-}
-
-.pinned-metric-container {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
-    flex-grow: 1;
-    min-width: 0;
-    width: 100%;
-}
-
-.pinned-item-content-wrapper {
-    display: flex;
-    flex-direction: column;
-    border: 1px solid #6366f1;
-    border-radius: 0.7rem;
-    padding: 0.5rem;
-}
-
-.pinned-sensor-card {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-    padding: 0.5rem;
-}
-
 .expanded-container {
     font-size: 0.85em;
     color: #fff;
@@ -659,22 +614,6 @@ body {
     padding: 0.5rem;
 }
 
-.pinned-metric-container .metric-name {
-    font-size: 0.9rem;
-}
-
-.pinned-metric-container .metric-icon svg {
-    width: 1.3rem;
-    height: 1.3rem;
-}
-
-.pinned-timestamp {
-    font-size: 0.9rem;
-}
-
-.pinned-metric-container .metric-value {
-    font-size: 0.8rem;
-}
 
 .sensor-history-entry {
     font-size: 0.9rem;
@@ -698,7 +637,7 @@ body {
 .pinned-sensor{
     border: 1px solid #6366f1;
     border-radius: 1rem;
-    overflow: hidden;
+    padding: 0.4rem;
 }
 
 @media (width <=500px) {
@@ -741,9 +680,6 @@ body {
         padding-top: 0.5rem;
     }
 
-    .pinned-timestamp {
-        font-size: 0.7rem;
-    }
 
 
 }
