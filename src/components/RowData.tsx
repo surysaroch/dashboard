@@ -9,7 +9,7 @@ interface SensorMetric {
   airQuality: number;
   temperature: number;
   humidity: number;
-};
+}
 
 interface rowDataProps {
   metric: SensorMetric;

@@ -1,4 +1,4 @@
-import React, { useMemo } from "react"
+import React from "react"
 import { useContext, useState } from 'react';
 import { DashboardContext } from '../context/DashboardContext';
 import Metric from './Metric';

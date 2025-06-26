@@ -56,7 +56,7 @@ const Pagination: React.FC<paginationType> = ({ onChange, currentPage, processDa
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       applyPageChange();
-    };
+    }
   };
 
   // If user clicks away from the page input  trigger page change

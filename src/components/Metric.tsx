@@ -19,7 +19,7 @@ interface metricType {
             humidity: number
             humidityPercentage: number
         }];
-};
+}
 
 // Metric component: displays a single metric (temperature, air quality, or humidity) with icon and progress bar
 const Metric: React.FC<metricType> = ({ metric, values }) => {
