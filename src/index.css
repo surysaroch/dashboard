@@ -18,6 +18,7 @@ svg {
 .dashboard-container {
     padding-left: 20rem;
     padding-right: 20rem;
+
 }
 
 .heading-container {
@@ -181,7 +182,7 @@ input[type=number] {
     font-weight: bold;
 }
 
-@media (width < 500px) {
+@media (width < 650px) {
     .filter-toggle-btn {
         font-weight: bold;
         background-color: #6366f1;
@@ -205,25 +206,25 @@ input[type=number] {
 }
 
 
-@media (width >=500px) {
-    .filter-toggle-btn {
-        font-weight: bold;
-        background-color: #6366f1;
-        color: #D3D3D3;
-        border: 1px solid #4b5563;
-        border-radius: 0.3rem;
-        font-size: 0.9rem;
-        cursor: pointer;
-        transition: background-color 0.2s, border-color 0.2s, box-shadow 0.2s;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 8.5rem;
-        padding: 0.5rem;
-        height: 2.5rem;
-    }
 
+.filter-toggle-btn {
+    font-weight: bold;
+    background-color: #6366f1;
+    color: #D3D3D3;
+    border: 1px solid #4b5563;
+    border-radius: 0.3rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s, box-shadow 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 8.5rem;
+    padding: 0.5rem;
+    height: 2.5rem;
 }
+
+
 
 /*-------------Sliders CSS---------------*/
 .filter-label {
@@ -268,9 +269,9 @@ input[type="range"].filter-range-input {
 
 
 .dropdown-container select {
-    -webkit-appearance: none; 
-    -moz-appearance: none;  
-    appearance: none;  
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
     font-size: 0.9rem;
     font-weight: bold;
     color: #D3D3D3;
@@ -305,7 +306,7 @@ input[type="range"].filter-range-input {
 }
 
 
-@media (width < 500px) {
+@media (width < 650px) {
     .sorting-container span {
         display: none;
     }
@@ -383,7 +384,7 @@ input[type="range"].filter-range-input {
     width: 100%;
 }
 
-@media (width <=500px) {
+@media (width <=650px) {
     .sensor-id-container {
         display: flex;
         justify-content: center;
@@ -523,7 +524,7 @@ input[type="range"].filter-range-input {
     background-image: linear-gradient(to right, #4ade80, #10b981);
 }
 
-@media (width <=500px) {
+@media (width <=650px) {
     .metric-icon svg {
         width: 1.2rem;
         height: 1.2rem;
@@ -586,7 +587,7 @@ input[type="range"].filter-range-input {
     padding: 1rem;
     margin-top: 0.5rem;
     position: absolute;
-    min-width: 600px;
+    min-width: 650px;
     max-height: 400px;
     overflow-y: auto;
     display: flex;
@@ -630,17 +631,17 @@ input[type="range"].filter-range-input {
 
 }
 
-.pinned-sensor .row-data-container{
+.pinned-sensor .row-data-container {
     border: none;
 }
 
-.pinned-sensor{
+.pinned-sensor {
     border: 1px solid #6366f1;
     border-radius: 1rem;
     padding: 0.4rem;
 }
 
-@media (width <=500px) {
+@media (width <=650px) {
     .pins-toggle-button p {
         display: none;
     }
@@ -651,7 +652,7 @@ input[type="range"].filter-range-input {
     }
 
     .pinned-items-panel {
-        min-width: 300px;
+        min-width: 22.5rem;
         max-height: 400px;
     }
 
