@@ -1,5 +1,5 @@
 # Real-Time Sensor Dashboard
-
+Check it out at: http://live-sensor-dashboard.s3-website.us-east-2.amazonaws.com/ 
 ## Overview
 
 This project is a real-time sensor data dashboard built with React and TypeScript. It provides an interactive interface for monitoring, filtering, sorting, and pinning live sensor data. The application is designed with performance in mind and can support to up to 10000 sensors without performance decays.
