@@ -54,7 +54,7 @@ The dashboard has been optimized for performance, especially considering real-ti
 
 *   **Efficient Rendering**: With the help of `React.memo`, `useMemo`, and `useCallback` hooks unecessary re-renders are minimized.
 *   **Pagination**: Only the data for the currently visible page is rendered in the DOM, ensuring a fast and responsive UI even when dealing with potentially large underlying datasets.
-*   **Update Latency**: Sensor data updates and corresponding UI refreshes typically occur within **20–30ms** per update cycle (measured with React DevTools Profiler).
+*   **Update Latency**: Sensor data updates and corresponding UI refreshes typically occur within **20–30ms** with 100 sensors updating per second (measured with React DevTools Profiler).
 *   **Apply Button for Filters**: Filter updates are only applied when the user clicks the "Apply" button, rather than on every slider movement or keystroke. This reduces unnecessary computations and re-renders, resulting in a smoother user experience.
 
 
