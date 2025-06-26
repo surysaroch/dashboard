@@ -42,7 +42,6 @@ const Pins = () => {
                                 const minTemperature = 10, maxTemperature = 40;
                                 const minAirQuality = 0, maxAirQuality = 200;
                                 const minHumidity = 0, maxHumidity = 90;
-
                                 const metricValues: MetricValues = [
                                     {
                                         temperature: sensor.temperature,

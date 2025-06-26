@@ -38,7 +38,7 @@ export default function DashboardContextProvider({ children }: DashboardContextP
     const [latestSensorData, setLatestSensorData] = useState<Record<string, SensorMetric[]>>({});
 
     useEffect(() => {
-        const stopSimulation = SimulateRealTimeData(100, 2000, (updates: SensorMetric[]) => {
+        const stopSimulation = SimulateRealTimeData(100, 1000, (updates: SensorMetric[]) => {
             setSensorData(updates);
 
             // Maintain a short history of recent values for each sensor to allow time-based sorting
@@ -64,7 +64,6 @@ export default function DashboardContextProvider({ children }: DashboardContextP
     // Add or remove a sensor from the pinned set
     const pinnedDataFunction = (sensorId: string) => {
         setPinnedData(prev => {
-            console.log(prev)
             const newSet = new Set(prev);
             if (newSet.has(sensorId)) {
                 newSet.delete(sensorId);
