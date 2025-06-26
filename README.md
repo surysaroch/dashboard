@@ -2,7 +2,8 @@
 
 ## Overview
 
-This project is a modern real-time sensor data dashboard built with React and TypeScript. It provides a clean, interactive interface for monitoring, filtering, sorting, and pinning live sensor data. The dashboard is designed with strong performance and usability.
+This project is a real-time sensor data dashboard built with React and TypeScript. It provides an interactive interface for monitoring, filtering, sorting, and pinning live sensor data. The application is designed with performance in mind and can support to up to 10000 sensors without performance decays.
+
 ## Main Features
 
 *   **Live Sensor Data**: Displays real-time updates from multiple sensors.
@@ -11,12 +12,8 @@ This project is a modern real-time sensor data dashboard built with React and Ty
 *   **Pagination**: Efficiently browse large datasets with fast pagination.
 *   **Pinning**: Pin up to 5 sensors for quick access and comparison.
 *   **Responsive Design**: Optimized for both desktop and mobile devices.
-*   **Performance Optimizations**: Uses React best practices (`useMemo` and `useCallback`) for smooth updates.
-
+  
 ## Project Structure
-
-The project is organized into several key components and contexts to manage state and UI logic effectively.
-
 ### Key Components
 
 *   **`Dashboard.tsx`**:
@@ -55,13 +52,11 @@ The dashboard has been optimized for performance, especially considering real-ti
 *   **Efficient Rendering**: With the help of `React.memo`, `useMemo`, and `useCallback` hooks unecessary re-renders are minimized.
 *   **Pagination**: Only the data for the currently visible page is rendered in the DOM, ensuring a fast and responsive UI even when dealing with potentially large underlying datasets.
 *   **Update Latency**: Sensor data updates and corresponding UI refreshes typically occur within **20–30ms** with 100 sensors updating per second (measured with React DevTools Profiler).
-*   **Apply Button for Filters**: Filter updates are only applied when the user clicks the "Apply" button, rather than on every slider movement or keystroke. This reduces unnecessary computations and re-renders, resulting in a smoother user experience.
-
 
 ### Memory Usage
 
 *   **Lightweight State**: To manage memory effectively, especially with many sensors, only the latest 10 readings per sensor are kept in the client-side memory.
-*   **Pin Limit**: Users are limited to pinning up to 5 sensors. This prevents memory bloat that could arise from pinning an excessive number of sensors, each potentially holding its own history.
+*   **Pin Limit**: Users are limited to pinning up to 5 sensors to prevent memory bloat.
 
 
 ## How to Run?
