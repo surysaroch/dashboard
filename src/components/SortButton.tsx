@@ -33,8 +33,8 @@ const Sorting: React.FC<SortingProps> = ({ onSort }) => {
                 <select value={sortMetric} onChange={handleMetricChange}>                    
                     <option value="sensorId">Sensor ID</option>
                     <option value="temperature">Temperature</option>
-                    <option value="humidity">Humidity</option>
                     <option value="airQuality">Air Quality</option>
+                    <option value="humidity">Humidity</option>
                     <option value="timestamp">Timestamp</option>
                 </select>
             </div>
