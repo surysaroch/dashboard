@@ -44,7 +44,7 @@ const Filtering: React.FC<FilteringProps> = ({ onFilter, onSensorFilter }) => {
                     [isMin ? "min" : "max"]: value
                 }));
         }
-    },[]);
+    }, []);
 
     // Sends the current filter values to the parent Dashboard component
     const updateFilterValues = () => {
@@ -79,54 +79,48 @@ const Filtering: React.FC<FilteringProps> = ({ onFilter, onSensorFilter }) => {
             { metric: "humidity", range: resetHumidity },
             { metric: "airQuality", range: resetAirQuality }
         ]);
-        onSensorFilter(""); 
+        onSensorFilter("");
     };
-    
+
     // Sends the searched sensorId to the parent Dashboard component
     const handleSearching = useCallback((searchedSensorId: string) => {
         onSensorFilter(searchedSensorId);
-    },[]);
+    }, []);
 
-     // Renders the filter UI: toggles, sliders, text input, and action buttons
+    // Renders the filter UI: toggles, sliders, text input, and action buttons
     return (
-        <>
-            <div className="filter-wrapper-main">
-                <button className="filter-toggle-btn" onClick={() => setIsExpanded(!isExpanded)}>
-                    <Filter />
-                    <p>Filter</p>
-                </button>
-                {isExpanded && (
-                    <div className="filter-panel-content">
-                        <div className="filter-input-group">
-                            <input
-                                className="filter-text-input"
-                                type="text"
-                                placeholder="e.g., Sensor-1"
-                                onChange={(e) => setSensorId(e.target.value)}
-                            />
-                        </div>
+        <div className="filter-wrapper-main">
+            <button className="filter-toggle-btn" onClick={() => setIsExpanded(!isExpanded)}>
+                <Filter />
+                <p>Filter</p>
+            </button>
+            {isExpanded && (
+                <div className="filter-panel-content">
+                    <input
+                        className="filter-text-input"
+                        type="text"
+                        placeholder="e.g., Sensor-1"
+                        onChange={(e) => setSensorId(e.target.value)}
+                    />
 
-                        <Sliders onSlide={handleFiltering} metric="Temperature" range={temperatureRange} />
-                        <Sliders onSlide={handleFiltering} metric="Air Quality" range={airQualityRange} />
-                        <Sliders onSlide={handleFiltering} metric="Humidity" range={humidityRange} />
+                    <Sliders onSlide={handleFiltering} metric="Temperature" range={temperatureRange} />
+                    <Sliders onSlide={handleFiltering} metric="Air Quality" range={airQualityRange} />
+                    <Sliders onSlide={handleFiltering} metric="Humidity" range={humidityRange} />
 
+                    <button className="apply-button" onClick={() => {
+                        updateFilterValues();
+                        handleSearching(sensorId);
+                    }}
+                    >
+                        Apply
+                    </button>
 
-                        <div>
-                            <button className="apply-button" onClick={() => {
-                                updateFilterValues();
-                                handleSearching(sensorId);
-                            }}
-                            >
-                                Apply
-                            </button>
-                        </div>
-                        <div>
-                            <button className="clear-button" onClick={clearAll}>Clear</button>
-                        </div>
-                    </div>
-                )}
-            </div>
-        </>
+                    <button className="clear-button" onClick={clearAll}>Clear</button>
+
+                </div>
+            )}
+        </div>
+
     )
 }
 

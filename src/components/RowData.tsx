@@ -2,6 +2,7 @@ import React, { useContext, useMemo } from 'react';
 import Metric from './Metric';
 import { DashboardContext } from '../context/DashboardContext';
 import Pin from './svg_components/Pin'
+import Unpin from './svg_components/Unpix';
 
 interface SensorMetric {
   sensorId: string;
@@ -13,10 +14,11 @@ interface SensorMetric {
 
 interface rowDataProps {
   metric: SensorMetric;
+  pinIconType?: "pin" | "unpin";
 }
 
 // RowData component: displays a single sensor's data row with metrics and pin/timestamp
-const RowData: React.FC<rowDataProps> = ({ metric }) => {
+const RowData: React.FC<rowDataProps> = ({ metric, pinIconType }) => {
   const { pinnedDataFunction } = useContext(DashboardContext);
 
   // Memoize metric values and their percentages for display in Metric components
@@ -67,7 +69,7 @@ const RowData: React.FC<rowDataProps> = ({ metric }) => {
       <div className="pin-and-timestamp-container">
         <div className="pinned-button">
           <button onClick={(e) => { e.stopPropagation(); pinnedDataFunction(metric.sensorId) }}>
-            <Pin />
+          {pinIconType === "unpin" ? <Unpin /> : <Pin />}
           </button>
         </div>
         <div className="timestamp">

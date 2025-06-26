@@ -1,8 +1,8 @@
-import React, { useMemo, useState, useContext, useCallback } from 'react';
+import React, { useMemo, useState, useContext, useCallback, useEffect } from 'react';
 
 import RowData from "./RowData";
-import Sorting from "./Sorting";
-import Filtering from "./Filtering";
+import Sorting from "./SortButton";
+import Filtering from "./FilterSliders";
 import Pagination from './Pagination';
 import Pins from './Pins';
 import { DashboardContext } from '../context/DashboardContext';
@@ -55,7 +55,8 @@ const Dashboard: React.FC = () => {
       return sortedData.direction === "ascending" ? items : items.reverse() //sort by: sensorId
     }
 
-    else {//Sort all the metrics using compare function
+    else {
+      //Sort all the metrics using compare function
       items.sort((a, b) => {
         const valA = a[sortedData.metric as keyof SensorMetric];
         const valB = b[sortedData.metric as keyof SensorMetric];
@@ -70,13 +71,13 @@ const Dashboard: React.FC = () => {
 
 
   //Slice the data to 5 sensors per page
-  const sliceData = useMemo(() => {
+  const sliceData = useEffect(() => {
     const last_page: number = Math.ceil(processData.length / MAX_PAGE_SIZE);
     const startIndex: number  = (currentPage - 1) * MAX_PAGE_SIZE;
     const endIndex: number  = startIndex + MAX_PAGE_SIZE;
     if (currentPage > last_page) {
       setCurrentPage(last_page === 0 ? last_page + 1 : last_page);
-    };
+    }
     setPageData(processData.slice(startIndex, endIndex));
   }, [currentPage, processData]);
 

@@ -53,7 +53,7 @@ const Pagination: React.FC<paginationType> = ({ onChange, currentPage, processDa
   };
 
   // Handle Enter key in input to trigger page change
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleEnterPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       applyPageChange();
     }
@@ -71,7 +71,7 @@ const Pagination: React.FC<paginationType> = ({ onChange, currentPage, processDa
       <input
         type="number"
         defaultValue={currentPage}
-        onKeyDown={handleKeyDown}
+        onKeyDown={handleEnterPress}
         onBlur={handleBlur}
         ref={inputRef}
       />

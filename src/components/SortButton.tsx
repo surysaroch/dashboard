@@ -9,7 +9,7 @@ interface SortingProps {
 // Sorting component: allows user to select metric and order for sorting the data
 const Sorting: React.FC<SortingProps> = ({ onSort }) => {
     const [sortMetric, setSortMetric] = useState("sensorId");
-    const [sortOrder, setSortOrder] = useState("ascending");
+    const [sortOrder, setSortOrder] = useState("ascending"); //ascnding or descending
 
     // Handle metric dropdown change and notify parent with onSort
     const handleMetricChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -27,7 +27,6 @@ const Sorting: React.FC<SortingProps> = ({ onSort }) => {
    
     // Render sorting controls: metric dropdown and order toggle button
     return (
-        <>
         <div className = "sorting-container">
             <span>Sort by:</span> 
             <div className = "dropdown-container">
@@ -47,7 +46,7 @@ const Sorting: React.FC<SortingProps> = ({ onSort }) => {
                 </button>
             </div>
         </div>
-        </>
+
     );
 };
 

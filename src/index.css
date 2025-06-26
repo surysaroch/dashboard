@@ -413,6 +413,7 @@ body {
         min-width: 0;
         padding-left: 0;
     }
+
     .row-data-container {
         margin-bottom: 0.8rem;
         border: 0.09rem solid #6366f1;
@@ -423,12 +424,13 @@ body {
         display: flex;
         gap: 1rem;
         align-items: center;
-    
+
     }
-    .pinned-button svg{
+
+    .pinned-button svg {
         width: 1.2rem;
         height: 1.2rem;
-    
+
     }
 
     .timestamp {
@@ -436,7 +438,7 @@ body {
         font-size: 0.7rem;
     }
 
-    
+
 }
 
 /*-------------Metric CSS---------------*/
@@ -527,15 +529,18 @@ body {
         width: 1.2rem;
         height: 1.2rem;
     }
-    .metric-name{
+
+    .metric-name {
         display: none;
     }
+
     .metric-info {
         display: flex;
         align-items: center;
         gap: 0.5rem;
         flex-basis: 0px;
     }
+
     .metric-value {
         font-size: 0.7em;
         margin-left: 0.3rem;
@@ -686,12 +691,22 @@ body {
 
 }
 
+.pinned-sensor .row-data-container{
+    border: none;
+}
+
+.pinned-sensor{
+    border: 1px solid #6366f1;
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
 @media (width <=500px) {
     .pins-toggle-button p {
         display: none;
     }
 
-    .pins-toggle-button{
+    .pins-toggle-button {
         width: 2.5rem;
         aspect-ratio: 1/1;
     }
@@ -707,13 +722,13 @@ body {
         background-color: #525252;
         border-radius: 0.5rem;
         padding: 0.2rem;
-    
+
     }
 
     .sensor-history-entry svg {
         width: 0.8rem;
         height: 0.8rem;
-    
+
     }
 
     .expanded-container {
@@ -725,9 +740,10 @@ body {
         padding: 0rem;
         padding-top: 0.5rem;
     }
+
     .pinned-timestamp {
         font-size: 0.7rem;
     }
-    
+
 
 }
