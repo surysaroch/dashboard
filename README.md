@@ -1,54 +1,88 @@
-# React + TypeScript + Vite
+# Real-Time Sensor Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
 
-Currently, two official plugins are available:
+This project is a modern real-time sensor data dashboard built with React and TypeScript. It provides a clean, interactive interface for monitoring, filtering, sorting, and pinning live sensor data. The dashboard is designed with strong performance and usability.
+## Main Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+*   **Live Sensor Data**: Displays real-time updates from multiple sensors.
+*   **Filtering**: Filter data by temperature, humidity, air quality, and sensor ID.
+*   **Sorting**: Sort by any metric or timestamp, ascending or descending.
+*   **Pagination**: Efficiently browse large datasets with fast pagination.
+*   **Pinning**: Pin up to 5 sensors for quick access and comparison.
+*   **Responsive Design**: Optimized for both desktop and mobile devices.
+*   **Performance Optimizations**: Uses React best practices (`useMemo` and `useCallback`) for smooth updates.
 
-## Expanding the ESLint configuration
+## Project Structure
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+The project is organized into several key components and contexts to manage state and UI logic effectively.
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+### Key Components
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+*   **`Dashboard.tsx`**:
+    *   The main parent component.
+    *   Manages global application state including filtering, sorting, and pagination logic.
+    *   Renders the primary list of sensor data.
+*   **`RowData.tsx`**:
+    *   Responsible for displaying the metrics of a single sensor.
+    *   Includes a pin button to add/remove the sensor from the pinned list.
+    *   Displays the timestamp of the latest sensor reading.
+*   **`Metric.tsx`**:
+    *   A reusable component to display an individual metric (e.g., temperature, humidity, air quality).
+    *   Features an icon representing the metric and an animated progress bar indicating its current value relative to its range.
+*   **`Pins.tsx`**:
+    *   Allows users to pin and unpin sensors.
+    *   Displays a list of currently pinned sensors, also showing their recent history for quick comparison.
+*   **`FilterSliders.tsx`**:
+    * Provides the main filter panel UI, including sensor ID search and metric range filters.
+    * Integrates with Sliders.tsx for range selection and passes filter changes up to the dashboard.
+*   **`Sliders.tsx`**:
+    * Renders a pair of range sliders for each metric (temperature, humidity, air quality), allowing users to set minimum and maximum values for filtering.
+    * Designed for reusability and accessibility.
+*   **`SortButton.tsx`**:
+    * Provides a dropdown for selecting the metric to sort by (sensor ID, temperature, humidity, air quality, or timestamp) and a toggle button for ascending/descending order.
+    * Notifies the dashboard of sort changes.
+*   **`DashboardContext.tsx`**:
+    *   Utilizes React's Context API to provide global state management.
+    *   Manages shared data such as the main sensor data array, the set of pinned sensor IDs, and historical data.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Performance Analysis
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+The dashboard has been optimized for performance, especially considering real-time data updates.
+
+### Update Speed
+
+*   **Efficient Rendering**: With the help of `React.memo`, `useMemo`, and `useCallback` hooks unecessary re-renders are minimized.
+*   **Pagination**: Only the data for the currently visible page is rendered in the DOM, ensuring a fast and responsive UI even when dealing with potentially large underlying datasets.
+*   **Update Latency**: Sensor data updates and corresponding UI refreshes typically occur within **20–30ms** per update cycle (measured with React DevTools Profiler).
+*   **Apply Button for Filters**: Filter updates are only applied when the user clicks the "Apply" button, rather than on every slider movement or keystroke. This reduces unnecessary computations and re-renders, resulting in a smoother user experience.
+
+
+### Memory Usage
+
+*   **Lightweight State**: To manage memory effectively, especially with many sensors, only the latest 10 readings per sensor are kept in the client-side memory.
+*   **Pin Limit**: Users are limited to pinning up to 5 sensors. This prevents memory bloat that could arise from pinning an excessive number of sensors, each potentially holding its own history.
+
+
+## How to Run?
+
+Follow these steps:
+
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/surysaroch/dashboard.git
+    cd dashboard
+    ```
+
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    ```
+
+3.  **Run the application:**
+    This will start the development server.
+    ```bash
+    npm run dev
+    ```
+
+---
