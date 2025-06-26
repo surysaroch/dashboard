@@ -32,7 +32,7 @@ const Pins = () => {
                                     <div className="pinned-sensor"key={sensorId}>
                                         <RowData metric={sensor} pinIconType="unpin" />
                                         <div className="expanded-container">
-                                            {latestSensorData[sensorId].slice(1, 5).map((entry, idx) => (
+                                            {latestSensorData[sensorId].slice(1, 10).map((entry, idx) => (
                                                 <div key={idx} className="sensor-history-entry">
                                                     <p><Temperature color="#FF7101" /> {entry.temperature.toFixed(2)}°C</p>
                                                     <p><AirQuality color="#00A3FF" /> {entry.airQuality.toFixed(2)}</p>

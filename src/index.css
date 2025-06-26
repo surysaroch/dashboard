@@ -620,13 +620,15 @@ input[type="range"].filter-range-input {
     border-top: 1px solid #6366f1;
     display: flex;
     gap: 0.5rem;
+    justify-content: space-around;
     padding: 0.5rem;
+    flex-wrap: wrap;
 }
 
 
 .sensor-history-entry {
     font-size: 0.9rem;
-    width: 100%;
+    width: 25%;
     background-color: #525252;
     border-radius: 0.5rem;
     padding: 0.3rem;
@@ -666,8 +668,6 @@ input[type="range"].filter-range-input {
 
     .sensor-history-entry {
         font-size: 0.7rem;
-        width: 100%;
-        background-color: #525252;
         border-radius: 0.5rem;
         padding: 0.2rem;
 
@@ -680,10 +680,6 @@ input[type="range"].filter-range-input {
     }
 
     .expanded-container {
-        font-size: 0.85em;
-        color: #fff;
-        border-top: 1px solid #6366f1;
-        display: flex;
         gap: 0.5rem;
         padding: 0rem;
         padding-top: 0.5rem;
