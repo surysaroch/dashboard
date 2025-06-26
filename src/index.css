@@ -207,21 +207,23 @@ input[type=number] {
 
 
 
-.filter-toggle-btn {
-    font-weight: bold;
-    background-color: #6366f1;
-    color: #D3D3D3;
-    border: 1px solid #4b5563;
-    border-radius: 0.3rem;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: background-color 0.2s, border-color 0.2s, box-shadow 0.2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 8.5rem;
-    padding: 0.5rem;
-    height: 2.5rem;
+@media (width >=500px) {
+    .filter-toggle-btn {
+        font-weight: bold;
+        background-color: #6366f1;
+        color: #D3D3D3;
+        border: 1px solid #4b5563;
+        border-radius: 0.3rem;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: background-color 0.2s, border-color 0.2s, box-shadow 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 8.5rem;
+        padding: 0.5rem;
+        height: 2.5rem;
+    }
 }
 
 
