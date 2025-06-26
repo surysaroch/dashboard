@@ -34,13 +34,13 @@ const Dashboard: React.FC = () => {
   });
   const [chosenSensorId, setChosenSensorId] = useState('')
 
-    // Memoized function to process data: applies filters and sorting
+  // Memoized function to process data: applies filters and sorting
   const processData = useMemo(() => {
     let items = []
-    if (sortedData.metric === "timestamp" && sortedData.direction === "descending"){
+    if (sortedData.metric === "timestamp" && sortedData.direction === "descending") {
       items = Object.values(latestSensorData).map(sensorHistory => sensorHistory[sensorHistory.length - 1]); //get the oldest sensors
     }
-    else{
+    else {
       items = [...sensorData];
     }
     items = items.filter(item => {
@@ -71,10 +71,10 @@ const Dashboard: React.FC = () => {
 
 
   //Slice the data to 5 sensors per page
-  const sliceData = useEffect(() => {
+  useEffect(() => {
     const last_page: number = Math.ceil(processData.length / MAX_PAGE_SIZE);
-    const startIndex: number  = (currentPage - 1) * MAX_PAGE_SIZE;
-    const endIndex: number  = startIndex + MAX_PAGE_SIZE;
+    const startIndex: number = (currentPage - 1) * MAX_PAGE_SIZE;
+    const endIndex: number = startIndex + MAX_PAGE_SIZE;
     if (currentPage > last_page) {
       setCurrentPage(last_page === 0 ? last_page + 1 : last_page);
     }
@@ -84,7 +84,7 @@ const Dashboard: React.FC = () => {
   // Handles sorting changes from Sorting component
   const handleSort = useCallback((chosenMetric: string, direction: string) => {
     setSortedData({ metric: chosenMetric, direction: direction });
-  },[]);
+  }, []);
 
   // Handles filter changes from Filtering component
   const handleFilterChange = useCallback((filters: FilterItem[]) => {
@@ -103,12 +103,12 @@ const Dashboard: React.FC = () => {
   const handleSensorIdFilter = useCallback((sensorId: string) => {
     setChosenSensorId(sensorId);
 
-  },[]);
+  }, []);
 
   // Handles pagination changes from Pagination component
   const handlePagination = useCallback((page: number) => {
     setCurrentPage(page);
-  },[]);
+  }, []);
 
   // Render dashboard UI: features, data rows, and pagination
   return (
@@ -116,7 +116,7 @@ const Dashboard: React.FC = () => {
       <div className="heading-container">
         <h1>LIVE SENSOR DATA</h1>
         <div className="features-container">
-          
+
           <div><Pins /></div>
           <div><Filtering onFilter={handleFilterChange} onSensorFilter={handleSensorIdFilter} /></div>
           <div><Sorting onSort={handleSort} /></div>
@@ -134,7 +134,7 @@ const Dashboard: React.FC = () => {
             <Pagination onChange={handlePagination} currentPage={currentPage} processDataLength={processData.length} maxPageSize={MAX_PAGE_SIZE} />
           </div>
         </>
-      ) : <p className = "no-match-output">No Data matches the current filter</p>}
+      ) : <p className="no-match-output">No Data matches the current filter</p>}
     </div>
 
   );
