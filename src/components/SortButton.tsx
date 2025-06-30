@@ -15,7 +15,7 @@ const Sorting: React.FC<SortingProps> = ({ onSort }) => {
     const handleMetricChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const newMetric: string = event.target.value;
         setSortMetric(newMetric);
-        onSort(newMetric, !isAscending);
+        onSort(newMetric, isAscending);
     };
 
     // Toggle sort order and notify parent with onSort

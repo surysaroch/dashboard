@@ -67,7 +67,7 @@ const RowData: React.FC<rowDataProps> = ({ metric }) => {
       </div>
       <div className="pin-and-timestamp-container">
         <div className="pinned-button">
-          <button onClick={(e) => { e.stopPropagation(); pinnedDataFunction(metric.sensorId);}}>
+          <button onClick={() => { pinnedDataFunction(metric.sensorId)}}>
           {isPinned ? <Unpin /> : <Pin />}
           </button>
         </div>
@@ -80,4 +80,4 @@ const RowData: React.FC<rowDataProps> = ({ metric }) => {
   );
 };
 
-export default RowData;
+export default React.memo(RowData);

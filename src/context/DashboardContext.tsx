@@ -38,7 +38,7 @@ export default function DashboardContextProvider({ children }: DashboardContextP
     const [latestSensorData, setLatestSensorData] = useState<Record<string, SensorMetric[]>>({});
 
     useEffect(() => {
-        const stopSimulation = SimulateRealTimeData(100, 1000, (updates: SensorMetric[]) => {
+        const stopSimulation = SimulateRealTimeData(100, 3000, (updates: SensorMetric[]) => {
             setSensorData(updates);
 
             // Maintain a short history of recent values for each sensor to allow time-based sorting
