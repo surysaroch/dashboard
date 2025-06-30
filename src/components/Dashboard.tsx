@@ -26,7 +26,7 @@ const Dashboard: React.FC = () => {
   const { sensorData, latestSensorData } = useContext(DashboardContext);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageData, setPageData] = useState<SensorMetric[]>([]);
-  const [sortedData, setSortedData] = useState({ metric: "sensorId", direction: "ascending" });
+  const [sortedData, setSortedData] = useState({ metric: "sensorId", direction: true });
   const [filteredData, setFilteredData] = useState({
     temperature: { min: 0, max: 40 },
     humidity: { min: 0, max: 90 },
@@ -37,7 +37,7 @@ const Dashboard: React.FC = () => {
   // Memoized function to process data: applies filters and sorting
   const processData = useMemo(() => {
     let items = []
-    if (sortedData.metric === "timestamp" && sortedData.direction === "descending") {
+    if (sortedData.metric === "timestamp" && !sortedData.direction) {
       items = Object.values(latestSensorData).map(sensorHistory => sensorHistory[sensorHistory.length - 1]); //get the oldest sensors
     }
     else {
@@ -52,7 +52,7 @@ const Dashboard: React.FC = () => {
     })
 
     if (sortedData.metric === "sensorId") {
-      return sortedData.direction === "ascending" ? items : items.reverse() //sort by: sensorId
+      return sortedData.direction ? items : items.reverse() //sort by: sensorId
     }
 
     else {
@@ -61,7 +61,7 @@ const Dashboard: React.FC = () => {
         const valA = a[sortedData.metric as keyof SensorMetric];
         const valB = b[sortedData.metric as keyof SensorMetric];
         if (typeof valA === "number" && typeof valB === "number") {
-          return sortedData.direction === "ascending" ? valA - valB : valB - valA;
+          return sortedData.direction ? valA - valB : valB - valA;
         }
         else { return 0 }
       });
@@ -82,7 +82,7 @@ const Dashboard: React.FC = () => {
   }, [currentPage, processData]);
 
   // Handles sorting changes from Sorting component
-  const handleSort = useCallback((chosenMetric: string, direction: string) => {
+  const handleSort = useCallback((chosenMetric: string, direction: boolean) => {
     setSortedData({ metric: chosenMetric, direction: direction });
   }, []);
 
@@ -110,33 +110,60 @@ const Dashboard: React.FC = () => {
     setCurrentPage(page);
   }, []);
 
+
+  const summary = useMemo(() => {
+    let tempSum = 0, humiditySum = 0, aqiSum = 0;
+    processData.forEach(data => {
+      tempSum += data.temperature;
+      humiditySum += data.humidity;
+      aqiSum += data.airQuality;
+    });
+    const count = processData .length;
+    const avgTemp = count ? tempSum / count : 0;
+    const avgHumidity = count ? humiditySum / count : 0;
+    const avgAqi = count ? aqiSum / count : 0;
+
+    return {
+      avgTemp,
+      avgHumidity,
+      avgAqi
+    };
+  }, [processData]);
+
   // Render dashboard UI: features, data rows, and pagination
   return (
-    <div className="dashboard-container">
-      <div className="heading-container">
-        <h1>LIVE SENSOR DATA</h1>
-        <div className="features-container">
+    <>
 
-          <div><Pins /></div>
-          <div><Filtering onFilter={handleFilterChange} onSensorFilter={handleSensorIdFilter} /></div>
-          <div><Sorting onSort={handleSort} /></div>
-        </div>
-      </div>
-      {pageData && pageData.length > 0 ? (
-        <>
-          <ul>
-            {pageData.map(metric => (
-              <RowData key={metric.sensorId} metric={metric} />
-            ))}
-          </ul>
+      <div className="dashboard-container">
+        <div className="heading-container">
+          <h1>LIVE SENSOR DASHBOARD</h1>
+          <div className="features-container">
 
-          <div className="pagination-container">
-            <Pagination onChange={handlePagination} currentPage={currentPage} processDataLength={processData.length} maxPageSize={MAX_PAGE_SIZE} />
+            <div><Pins /></div>
+            <div><Filtering onFilter={handleFilterChange} onSensorFilter={handleSensorIdFilter} /></div>
+            <div><Sorting onSort={handleSort} /></div>
           </div>
-        </>
-      ) : <p className="no-match-output">No Data matches the current filter</p>}
-    </div>
+        </div>
+        <div className="summary-stats">
+        <p>Average Temperature: {summary.avgTemp.toFixed(2)}°C</p>
+        <p>Average Air Quality: {summary.avgAqi.toFixed(2)}</p>
+        <p>Average Humidity: {summary.avgHumidity.toFixed(2)}%</p>
+      </div>
+        {pageData && pageData.length > 0 ? (
+          <>
+            <ul>
+              {pageData.map(metric => (
+                <RowData key={metric.sensorId} metric={metric} />
+              ))}
+            </ul>
 
+            <div className="pagination-container">
+              <Pagination onChange={handlePagination} currentPage={currentPage} processDataLength={processData.length} maxPageSize={MAX_PAGE_SIZE} />
+            </div>
+          </>
+        ) : <p className="no-match-output">No Data matches the current filter</p>}
+      </div>
+    </>
   );
 };
 

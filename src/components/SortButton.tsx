@@ -3,26 +3,25 @@ import { useState } from "react";
 import Arrow from "./svg_components/Arrow";
 
 interface SortingProps {
-    onSort: (metric: string, direction: string) => void;
+    onSort: (metric: string, direction: boolean) => void;
 }
 
 // Sorting component: allows user to select metric and order for sorting the data
 const Sorting: React.FC<SortingProps> = ({ onSort }) => {
     const [sortMetric, setSortMetric] = useState("sensorId");
-    const [sortOrder, setSortOrder] = useState("ascending"); //ascnding or descending
+    const [isAscending, setIsAscending] = useState(true); //ascnding or descending
 
     // Handle metric dropdown change and notify parent with onSort
     const handleMetricChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const newMetric: string = event.target.value;
         setSortMetric(newMetric);
-        onSort(newMetric, sortOrder);
+        onSort(newMetric, !isAscending);
     };
 
     // Toggle sort order and notify parent with onSort
     const handleOrderChange = () => {
-        const newOrder: string = sortOrder === "ascending" ? "descending" : "ascending";
-        setSortOrder(newOrder);
-        onSort(sortMetric, newOrder);
+        setIsAscending(!isAscending);
+        onSort(sortMetric, !isAscending);
     };
    
     // Render sorting controls: metric dropdown and order toggle button
@@ -40,9 +39,7 @@ const Sorting: React.FC<SortingProps> = ({ onSort }) => {
             </div>
             <div className = "order-toggle-button">
                 <button onClick={handleOrderChange}>
-                    {sortOrder === "ascending" ?
-                        <><Arrow/><p>Ascending</p></>: 
-                        <><Arrow isFlipped={true}/> <p>Descending</p></>}
+                    <Arrow isFlipped={!isAscending}  /><p>{isAscending?"Ascending":"Descending"}</p>
                 </button>
             </div>
         </div>

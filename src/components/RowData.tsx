@@ -2,7 +2,7 @@ import React, { useContext, useMemo } from 'react';
 import Metric from './Metric';
 import { DashboardContext } from '../context/DashboardContext';
 import Pin from './svg_components/Pin'
-import Unpin from './svg_components/Unpix';
+import Unpin from './svg_components/Unpin';
 
 interface SensorMetric {
   sensorId: string;
@@ -14,13 +14,12 @@ interface SensorMetric {
 
 interface rowDataProps {
   metric: SensorMetric;
-  pinIconType?: "pin" | "unpin";
 }
 
 // RowData component: displays a single sensor's data row with metrics and pin/timestamp
-const RowData: React.FC<rowDataProps> = ({ metric, pinIconType }) => {
-  const { pinnedDataFunction } = useContext(DashboardContext);
-
+const RowData: React.FC<rowDataProps> = ({ metric }) => {
+  const { pinnedData, pinnedDataFunction } = useContext(DashboardContext);
+  const isPinned = pinnedData.has(metric.sensorId);
   // Memoize metric values and their percentages for display in Metric components
   const metricValues = useMemo(() => {
     const minTemperature: number = 10;
@@ -68,8 +67,8 @@ const RowData: React.FC<rowDataProps> = ({ metric, pinIconType }) => {
       </div>
       <div className="pin-and-timestamp-container">
         <div className="pinned-button">
-          <button onClick={(e) => { e.stopPropagation(); pinnedDataFunction(metric.sensorId) }}>
-          {pinIconType === "unpin" ? <Unpin /> : <Pin />}
+          <button onClick={(e) => { e.stopPropagation(); pinnedDataFunction(metric.sensorId);}}>
+          {isPinned ? <Unpin /> : <Pin />}
           </button>
         </div>
         <div className="timestamp">

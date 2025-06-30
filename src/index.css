@@ -103,6 +103,15 @@ input[type=number] {
     justify-content: center;
 }
 
+.summary-stats {
+    display: flex;
+    justify-content: space-evenly;
+    color: #fff;
+    margin: 0.5rem;
+    background-color: #4b5563;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+}
 @media (width < 1400px) {
     .dashboard-container {
         padding-left: 0.8rem;

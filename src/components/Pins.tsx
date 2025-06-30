@@ -30,7 +30,7 @@ const Pins = () => {
                                 if (!sensor) return null;
                                 return (
                                     <div className="pinned-sensor"key={sensorId}>
-                                        <RowData metric={sensor} pinIconType="unpin" />
+                                        <RowData metric={sensor} />
                                         <div className="expanded-container">
                                             {latestSensorData[sensorId].slice(1, 10).map((entry, idx) => (
                                                 <div key={idx} className="sensor-history-entry">
