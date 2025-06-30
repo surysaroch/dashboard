@@ -50,6 +50,19 @@ svg {
     gap: 1rem
 }
 
+.summary-stats {
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: center; 
+    gap: 1rem;
+    color: #fff;
+    margin-top: 0.7rem;
+    background-color: #2d3748;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    border: 1px solid #6366f1;
+
+}
 
 .pagination-container {
     display: flex;
@@ -110,18 +123,6 @@ input[type=number] {
     justify-content: center;
 }
 
-.summary-stats {
-    display: flex;
-    flex-wrap: wrap; 
-    justify-content: center; 
-    gap: 1rem;
-    color: #fff;
-    margin-top: 0.7rem;
-    background-color: #2d3748;
-    border-radius: 0.5rem;
-    padding: 0.5rem;
-
-}
 
 .summary-stats p {
     flex: 1 1 150px; 
