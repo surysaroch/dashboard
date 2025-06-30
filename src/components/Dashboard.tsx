@@ -2,7 +2,7 @@ import React, { useMemo, useState, useContext, useCallback, useEffect } from 're
 
 import RowData from "./RowData";
 import Sorting from "./SortButton";
-import Filtering from "./FilterSliders";
+import Filtering from "./Filter";
 import Pagination from './Pagination';
 import Pins from './Pins';
 import { DashboardContext } from '../context/DashboardContext';
@@ -84,6 +84,7 @@ const Dashboard: React.FC = () => {
   // Handles sorting changes from Sorting component
   const handleSort = useCallback((chosenMetric: string, direction: boolean) => {
     setSortedData({ metric: chosenMetric, direction: direction });
+    setCurrentPage(1)
   }, []);
 
   // Handles filter changes from Filtering component
@@ -103,6 +104,7 @@ const Dashboard: React.FC = () => {
   const handleSensorIdFilter = (sensorId: string) => {
     setChosenSensorId(sensorId);
     console.log('hfojdfklr')
+    setCurrentPage(1)
   };
 
   // Handles pagination changes from Pagination component
@@ -118,7 +120,7 @@ const Dashboard: React.FC = () => {
       humiditySum += data.humidity;
       aqiSum += data.airQuality;
     });
-    const count = processData .length;
+    const count = processData.length;
     const avgTemp = count ? tempSum / count : 0;
     const avgHumidity = count ? humiditySum / count : 0;
     const avgAqi = count ? aqiSum / count : 0;
@@ -136,35 +138,38 @@ const Dashboard: React.FC = () => {
 
       <div className="dashboard-container">
         <div className="heading-container">
-          <h1>LIVE SENSOR DASHBOARD</h1>
-          <div className="features-container">
+          <div className="title-and-buttons">
+            <h1>LIVE SENSOR DASHBOARD</h1>
+            <div className="features-container">
 
-            <div><Pins /></div>
-            <div><Filtering onFilter={handleFilterChange} onSensorFilter={handleSensorIdFilter} /></div>
-            <div><Sorting onSort={handleSort} /></div>
-          </div>
-        </div>
-        <div className="summary-stats">
-        <p>Average Temperature: {summary.avgTemp.toFixed(2)}°C</p>
-        <p>Average Air Quality: {summary.avgAqi.toFixed(2)}</p>
-        <p>Average Humidity: {summary.avgHumidity.toFixed(2)}%</p>
-      </div>
-        {pageData && pageData.length > 0 ? (
-          <>
-            <ul>
-              {pageData.map(metric => (
-                <RowData key={metric.sensorId} metric={metric} />
-              ))}
-            </ul>
-
-            <div className="pagination-container">
-              <Pagination onChange={handlePagination} currentPage={currentPage} processDataLength={processData.length} maxPageSize={MAX_PAGE_SIZE} />
+              <div><Pins /></div>
+              <div><Filtering onFilter={handleFilterChange} onSensorFilter={handleSensorIdFilter} /></div>
+              <div><Sorting onSort={handleSort} /></div>
             </div>
-          </>
-        ) : <p className="no-match-output">No Data matches the current filter</p>}
-      </div>
-    </>
-  );
+            </div>
+            <div className="summary-stats">
+              <p>Average Temperature: {summary.avgTemp.toFixed(2)}°C</p>
+              <p>Average Air Quality: {summary.avgAqi.toFixed(2)}</p>
+              <p>Average Humidity: {summary.avgHumidity.toFixed(2)}%</p>
+            </div>
+          </div>
+
+          {pageData && pageData.length > 0 ? (
+            <>
+              <ul>
+                {pageData.map(metric => (
+                  <RowData key={metric.sensorId} metric={metric} />
+                ))}
+              </ul>
+
+              <div className="pagination-container">
+                <Pagination onChange={handlePagination} currentPage={currentPage} processDataLength={processData.length} maxPageSize={MAX_PAGE_SIZE} />
+              </div>
+            </>
+          ) : <p className="no-match-output">No Data matches the current filter</p>}
+        </div>
+      </>
+      );
 };
 
-export default Dashboard;
+      export default Dashboard;

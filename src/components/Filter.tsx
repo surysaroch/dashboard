@@ -20,7 +20,7 @@ const Filtering: React.FC<FilteringProps> = ({ onFilter, onSensorFilter }) => {
     const [isExpanded, setIsExpanded] = useState(false)
     const [temperatureRange, setTemperatureRange] = useState({ min: 10, max: 40 })
     const [airQualityRange, setAirQualityRange] = useState({ min: 0, max: 200 })
-    const [humidityRange, setHumidityRange] = useState({ min: 0, max: 90 })
+    const [humidityRange, setHumidityRange] = useState({ min:30, max: 90 })
     const [sensorId, setSensorId] = useState("")
 
     // Handles slider changes for each metric and updates their state
@@ -68,7 +68,7 @@ const Filtering: React.FC<FilteringProps> = ({ onFilter, onSensorFilter }) => {
     // Resets all filters and notifies parent to clear filters and sensor search
     const clearAll = () => {
         const resetTemperature: { min: number; max: number } = { min: 10, max: 40 };
-        const resetHumidity: { min: number; max: number } = { min: 0, max: 90 };
+        const resetHumidity: { min: number; max: number } = { min: 30, max: 90 };
         const resetAirQuality: { min: number; max: number } = { min: 0, max: 200 };
         setTemperatureRange(resetTemperature);
         setHumidityRange(resetHumidity);

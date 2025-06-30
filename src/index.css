@@ -23,7 +23,8 @@ svg {
 
 .heading-container {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    justify-content: center;
     position: sticky;
     top: 0;
     z-index: 1;
@@ -34,6 +35,12 @@ svg {
 .heading-container h1 {
     width: 100%;
     color: #fff
+}
+
+.title-and-buttons{
+    display: flex;
+    align-items: center;
+
 }
 
 .features-container {
@@ -105,13 +112,23 @@ input[type=number] {
 
 .summary-stats {
     display: flex;
-    justify-content: space-evenly;
+    flex-wrap: wrap; 
+    justify-content: center; 
+    gap: 1rem;
     color: #fff;
     margin: 0.5rem;
-    background-color: #4b5563;
+    background-color: #2d3748;
     border-radius: 0.5rem;
     padding: 0.5rem;
+
 }
+
+.summary-stats p {
+    flex: 1 1 150px; 
+    min-width: 1.5rem;
+    text-align: center;
+    margin: 0;
+}   
 @media (width < 1400px) {
     .dashboard-container {
         padding-left: 0.8rem;
@@ -125,7 +142,11 @@ input[type=number] {
         align-items: center;
 
     }
-
+    .title-and-buttons{
+        display: flex;
+        flex-direction: column;
+    
+    }
     .heading-container h1 {
         display: flex;
         justify-content: center;
@@ -133,12 +154,15 @@ input[type=number] {
 
     }
 
-
     .features-container {
         display: flex;
         width: 100%;
         justify-content: center;
         gap: 1rem
+    }
+
+    .summary-stats{
+        font-size: 0.8rem;
     }
 }
 

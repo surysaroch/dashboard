@@ -18,7 +18,7 @@ const Sliders: React.FC<sliderProps> = ({ onSlide, metric, range }) => {
                 <input
                     className="filter-range-input"
                     type="range"
-                    min={metric === "Temperature" ? 10 : metric === "Air Quality" ? 0 : 0}
+                    min={metric === "Temperature" ? 10 : metric === "Air Quality" ? 0 : 30}
                     max={range.max}
                     step={1}
                     value={range.min}
