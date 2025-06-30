@@ -123,12 +123,12 @@ const Dashboard: React.FC = () => {
     const count = processData.length;
     const avgTemp = count ? tempSum / count : 0;
     const avgHumidity = count ? humiditySum / count : 0;
-    const avgAqi = count ? aqiSum / count : 0;
+    const avgAq = count ? aqiSum / count : 0;
 
     return {
       avgTemp,
       avgHumidity,
-      avgAqi
+      avgAq
     };
   }, [processData]);
 
@@ -148,9 +148,9 @@ const Dashboard: React.FC = () => {
             </div>
             </div>
             <div className="summary-stats">
-              <p>Average Temperature: {summary.avgTemp.toFixed(2)}°C</p>
-              <p>Average Air Quality: {summary.avgAqi.toFixed(2)}</p>
-              <p>Average Humidity: {summary.avgHumidity.toFixed(2)}%</p>
+              <p><p style={{fontWeight:'bold'}}>Average Temperature:</p> {summary.avgTemp.toFixed(2)}°C</p>
+              <p><p style={{fontWeight:'bold'}}>Average Air Quality:</p>  {summary.avgAq.toFixed(2)}</p>
+              <p><p style={{fontWeight:'bold'}}>Average Humidity:</p>   {summary.avgHumidity.toFixed(2)}%</p>
             </div>
           </div>
 
