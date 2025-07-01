@@ -20,6 +20,9 @@ This project is a real-time sensor data dashboard built with React and TypeScrip
     *   The main parent component.
     *   Manages global application state including filtering, sorting, and pagination logic.
     *   Renders the primary list of sensor data.
+*   **`Pagination.tsx`**:
+    *   Page navigation for the sensor data list.
+    *   Handles edge cases such as being on the first/last page and disabling navigation buttons accordingly.
 *   **`RowData.tsx`**:
     *   Responsible for displaying the metrics of a single sensor.
     *   Includes a pin button to add/remove the sensor from the pinned list.
@@ -30,7 +33,7 @@ This project is a real-time sensor data dashboard built with React and TypeScrip
 *   **`Pins.tsx`**:
     *   Allows users to pin and unpin sensors.
     *   Displays a list of currently pinned sensors, also showing their recent history for quick comparison.
-*   **`FilterSliders.tsx`**:
+*   **`Filter.tsx`**:
     * Provides the main filter panel UI, including sensor ID search and metric range filters.
     * Integrates with Sliders.tsx for range selection and passes filter changes up to the dashboard.
 *   **`Sliders.tsx`**:
@@ -39,9 +42,10 @@ This project is a real-time sensor data dashboard built with React and TypeScrip
 *   **`SortButton.tsx`**:
     * Provides a dropdown for selecting the metric to sort by (sensor ID, temperature, humidity, air quality, or timestamp) and a toggle button for ascending/descending order.
     * Notifies the dashboard of sort changes.
+### Context
 *   **`DashboardContext.tsx`**:
-    *   Utilizes React's Context API to provide global state management.
-    *   Manages shared data such as the main sensor data array, the set of pinned sensor IDs, and historical data.
+    * Uses React's Context API to provide global state management.
+    * Manages shared data such as the main sensor data array, the set of pinned sensor IDs, and historical data.
 
 ## Performance Analysis
 
