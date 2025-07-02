@@ -103,7 +103,6 @@ const Dashboard: React.FC = () => {
   // Handles sensorId search from Filtering component
   const handleSensorIdFilter = (sensorId: string) => {
     setChosenSensorId(sensorId);
-    console.log('hfojdfklr')
     setCurrentPage(1)
   };
 
